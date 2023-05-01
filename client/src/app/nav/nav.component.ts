@@ -1,5 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { Observable, of } from 'rxjs';
+import { User } from '../_models/user';
 
 
 @Component({
@@ -10,29 +12,26 @@ import { AccountService } from '../_services/account.service';
 
 export class NavComponent implements OnInit {
   model:any={}
-  loggedIn = false;
-  isCollapse = true;
-  
-  constructor(private accountServices:AccountService) { }
+
+  constructor(public accountServices:AccountService) { }
 
   ngOnInit(): void {
-    this.getCurrentUser()
   }
   
-  //Temporary to Persist user afterwards we use Async Pipe
-  getCurrentUser(){
-    this.accountServices.currentUser$.subscribe({
-      next: user=>this.loggedIn = !!user,
-      error: error => console.log(error)
-    })
-  }
+  //Temporary to Persist user afterwards we use Async Pipe 
+  //removing this cause we are using Observable now
+  // getCurrentUser(){
+  //   this.accountServices.currentUser$.subscribe({
+  //     next: user=>this.loggedIn = !!user,
+  //     error: error => console.log(error)
+  //   })
+  // }
 
   login()
   {
     this.accountServices.login(this.model).subscribe({
       next: response=>{
         console.log(response);
-        this.loggedIn = true;
       },
       error: error=> console.log(error)
     })
@@ -40,7 +39,6 @@ export class NavComponent implements OnInit {
 
 
   logout(){
-    this.loggedIn=false;
     this.accountServices.logout();
   }
 

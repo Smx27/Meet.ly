@@ -1,0 +1,26 @@
+<div class="modal fade rounded5" *ngIf="register" id="registerModal" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h4 class="modal-title" id="exampleModalLabel">Register</h4>
+                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true border-0">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" placeholder="example@gmail.com">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="**">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-info">Login</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

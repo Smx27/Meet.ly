@@ -13,6 +13,7 @@ export class AccountService {
 
   //Using Union type to fix the null user issue 
   private currentuserSource= new BehaviorSubject<User | null>(null);
+  
   //Setting Up a Global Observable
   currentUser$= this.currentuserSource.asObservable();
 

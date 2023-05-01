@@ -1,0 +1,62 @@
+
+
+* {
+    font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+}
+.container{
+    height: 90vh;
+    width: 100%;
+    text-align: center;
+}
+
+a {
+    color: #455a64;
+    -webkit-transition: all .35s;
+    -moz-transition: all .35s;
+    transition: all .35s;
+}
+
+a:hover,
+a:focus {
+    color: #9c27c1;
+    outline: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.cursive {
+    font-family: 'Dancing Script', cursive;
+    text-transform: none;
+    text-shadow:
+        1.2px 2.9px 2.2px rgba(0, 0, 0, 0.01),
+        2.9px 7px 5.3px rgba(0, 0, 0, 0.009),
+        5.4px 13.1px 10px rgba(0, 0, 0, 0.016),
+        9.6px 23.5px 17.9px rgba(0, 0, 0, 0.03),
+        18px 43.9px 33.4px rgba(0, 0, 0, 0.048),
+        43px 105px 80px rgba(0, 0, 0, 0.07);
+}
+
+.text-faded {
+    color: rgba(245, 245, 245, 0.7);
+}
+
+.text-dark {
+    color: #111;
+}
+
+.text-primary {
+    color: #9c27b0;
+}
+
+a:hover{
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}

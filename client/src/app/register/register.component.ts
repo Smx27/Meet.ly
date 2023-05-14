@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -6,15 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  @Input() userFromHome:any;
   model:any = {}
-  constructor() { }
+
+  constructor(public accountServices:AccountService) { }
 
   ngOnInit(): void {
   }
 
   register()
   {
-    console.log(this.model);
+    this.accountServices.register(this.model).subscribe({
+      next: response=>{
+        console.log(response);
+      },
+      error: error=> console.log(error)
+    })
   }
 
   cancle()

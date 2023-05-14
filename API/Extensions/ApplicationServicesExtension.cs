@@ -21,8 +21,11 @@ namespace API.Extensions
                 opt.UseSqlite(config.GetConnectionString("DBCS"));
             });
 
-            //ADDED Cors Policy
-            services.AddCors();
+            //ADDED Cors Policy Created A New Policy NAME CORS and Call in APP context  
+            services.AddCors(o=>o.AddPolicy(name: "CORS",builder=>{
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            }));
+
 
             //Added JWT
             services.AddScoped<ITokenService,TokenService>();

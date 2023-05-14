@@ -1,25 +1,54 @@
-<div class="modal fade rounded5" *ngIf="register" id="registerModal" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <h4 class="modal-title" id="exampleModalLabel">Register</h4>
-                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true border-0">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label>User Name</label>
-                        <input type="text" class="form-control" placeholder="example@gmail.com">
-                        <label>Password</label>
-                        <input type="password" class="form-control" placeholder="**">
+<div class="form_wrapper">
+    <div class="form_container">
+        <div class="title_container">
+            <h2>Register Here</h2>
+        </div>
+        <div class="row clearfix">
+            <div class="">
+                <form #registerForm="ngForm" (ngSubmit)="register()">
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                        <input type="email" [(ngModel)]="model.username" name="username" placeholder="username" required />
                     </div>
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                        <input type="password" [(ngModel)]="model.password" name="password" placeholder="Password" required />
+                    </div>
+                    <!-- <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                        <input type="password" name="cnfpassword" placeholder="Re-type Password" required />
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col_half">
+                            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                                <input type="text" name="name" placeholder="First Name" />
+                            </div>
+                        </div>
+                        <div class="col_half">
+                            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                                <input type="text" name="name" placeholder="Last Name" required />
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="input_field radio_option">
+                        <input type="radio" name="radiogroup1" id="rd1">
+                        <label for="rd1">Male</label>
+                        <input type="radio" name="radiogroup1" id="rd2">
+                        <label for="rd2">Female</label>
+                    </div> -->
+                    <!-- We only support Indian only no country list -->
+                    <!-- <div class="input_field select_option">
+                        <select>
+                            <option>Select a country</option>
+                            <option>India</option>
+                            
+                        </select>
+                        <div class="select_arrow"></div>
+                    </div> -->
+                    <!-- <div class="input_field checkbox_option">
+                        <input type="checkbox" id="cb1">
+                        <label for="cb1">I agree with terms and conditions</label>
+                    </div> -->
+                    <input class="button" type="submit" value="Register" />
+                    <input class="button" type="button" (click)="cancle()" value="Cancle" />
                 </form>
-            </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-info">Login</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

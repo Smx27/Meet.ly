@@ -14,7 +14,10 @@ builder.Services.AddIdentityServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseCors(c=> c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+//app.UseCors(c=> c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.UseCors("CORS");
+//Add Redirection from HTTP to HTTPS
+app.UseHttpsRedirection();
 
 //Jwt Authetication
 app.UseAuthentication();

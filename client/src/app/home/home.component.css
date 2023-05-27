@@ -9,6 +9,7 @@
     text-align: center;
 }
 
+
 a {
     color: #455a64;
     -webkit-transition: all .35s;
@@ -59,4 +60,8 @@ a:hover{
     background-color: rgba(0, 0, 0, 0.25);
     color: white;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+#btnfindlove{
+    border: 1px solid salmon;
+    border-radius: 15px;
 }

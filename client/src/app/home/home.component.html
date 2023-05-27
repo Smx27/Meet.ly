@@ -2,8 +2,7 @@
     <div class="container" style="
     display: flex;
     justify-content: center;
-    align-items: center;
-">
+    align-items: center;">
         <div *ngIf="!registerMode" class="inner">
             <h1 class="cursive ">Where S<span style="color:#FF6969;font-size: 20px;">❤</span>ul find mate.</h1>
             <h4>Life is better when you share it with someone special.<br /> Meet.<span style="color:#FF6969;">ly</span> helps you find that special someone.
@@ -14,7 +13,16 @@
             <a href="#one" class="btn btn-xl page-scroll">Get Started</a>
         </div>
         <div *ngIf="registerMode">
-            <app-register [userFromHome]="users"></app-register>
+            <app-register [userFromHome]="users" (OutputFromReg)="CancleRegisterMode($event)"></app-register>
+        </div>
+        <div class="header">
+            <h2> It's Never Too Late<br>To Fall In L<span style="color:#FF6969;font-size: 20px;">❤</span>ve</h2>
+            <br>
+            <h6>One day someone will walk into your life and make you see why it <br>
+            never Worked out with anyone else.</h6>
+            <button id="btnfindlove">
+                Your S<span style="color:#FF6969;font-size: 15px;">❤</span>ulmate
+            </button>            
         </div>
     </div>
 </div>

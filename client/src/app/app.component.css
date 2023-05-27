@@ -1,2 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Questrial);
 @import url(https://fonts.googleapis.com/css?family=Dancing+Script:700);
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.container-fluid {
+    background: rgb(255, 189, 252);
+    background: linear-gradient(180deg, rgba(36, 0, 34, 1) 0%, rgb(252, 224, 255) 0%, rgba(255, 255, 255, 1) 100%);
+}

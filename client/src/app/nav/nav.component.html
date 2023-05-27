@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg ">
     <div class="container">
         <a class="navbar-brand" style="font-family: 'Dancing Script', cursive; font-size: 20px;" href="#">Meet.<span style="color:#FF6969;">Ly</span></a>
         
@@ -14,12 +14,12 @@
             </li>
         </ul>
         
-        <form *ngIf="!(accountServices.currentUser$ | async)" class="d-flex" #loginform="ngForm" (ngSubmit)="login()" autocomplete="off">
+        <!-- <form *ngIf="!(accountServices.currentUser$ | async)" class="d-flex" #loginform="ngForm" (ngSubmit)="login()" autocomplete="off">
             <input name="Username" [(ngModel)]="model.Username" class="form-control me-2" type="text" placeholder="Username" aria-label="Search">
             <input name="Password" [(ngModel)]="model.Password" class="form-control me-2" type="password" placeholder="Password" aria-label="Search">
             
             <button class="btn btn-outline-success"  type="submit">Login</button>
-        </form>
+        </form> -->
 
 
 

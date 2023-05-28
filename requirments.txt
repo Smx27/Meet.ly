@@ -1,0 +1,11 @@
+To install dotnet sdk 7.0.5 what im currently using 
+https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+and to install specific node version which is 16.20.0
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
+
+or I'll reffer to this web site 
+https://github.com/nodesource/distributions
+
+to install angular 14.2.0 
+sudo npm install -g @angular/cli@14

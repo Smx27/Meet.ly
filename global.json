@@ -1,5 +1,8 @@
 {
   "sdk": {
-    "version": "7.0.5"
-  }
+    "version": "7.0.105"
+  },
+  "targetFramework": "net7.0",
+  "rollForward": true,
+  "allowPrerelease": true
 }

@@ -1,3 +1,13 @@
 .navbar{
     background: rgb(255, 226, 254);
 }
+ul li{
+    padding-right: 0.6rem;
+}
+
+ul li:hover{
+    color: rgb(78, 95, 95);
+}
+.click{
+    color: #FF6969;
+}

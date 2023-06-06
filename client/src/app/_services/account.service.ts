@@ -23,6 +23,7 @@ export class AccountService {
   //Settingup Local storage to persist user
   login(model:any)
   {
+    console.log(model);
     return this.http.post<User>(this.baseUrl+'accounts/login',model).pipe(
       //UsingRxjs
       map((response:User)=>{

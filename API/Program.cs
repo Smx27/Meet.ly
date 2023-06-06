@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.ApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 //app.UseCors(c=> c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());

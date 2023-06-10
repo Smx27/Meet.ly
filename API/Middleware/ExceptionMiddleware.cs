@@ -10,6 +10,8 @@ namespace API.Middleware
         
         public ILogger<ExceptionMiddleware> _logger { get; }
         public IHostEnvironment _env { get; set; }
+        /* This is the constructor of the `ExceptionMiddleware` class. It takes three parameters:
+        `next`, `logger`, and `env`. */
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger,
         IHostEnvironment env)
         {
@@ -18,6 +20,14 @@ namespace API.Middleware
             this._next = next;
         }
 
+        /// <summary>
+        /// This is an async function that catches exceptions, logs them, and returns a JSON response
+        /// with the error message and status code.
+        /// </summary>
+        /// <param name="HttpContext">HttpContext is an object that encapsulates all information about
+        /// an individual HTTP request/response. It contains properties such as Request, Response, User,
+        /// Session, and more. It is used to access and manipulate the incoming request and outgoing
+        /// response in ASP.NET Core applications.</param>
         public async Task InvokeAsync(HttpContext context)
         {
             try

@@ -23,6 +23,15 @@ namespace API.Services
             _key= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
         /// <summary>
+        /// This function creates a JWT token for authentication in an API using a user's username as a
+        /// claim.
+        /// </summary>
+        /// <param name="AppUser">AppUser is a custom class representing a user in the application. It
+        /// contains properties such as UserName, Email, Password, etc.</param>
+        /// <returns>
+        /// The method is returning a JWT token as a string.
+        /// </returns>
+        /// <summary>
         /// Create a Jwt Token To Auth The api
         /// </summary>
         /// <param name="user"></param>

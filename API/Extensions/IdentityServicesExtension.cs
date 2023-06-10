@@ -7,11 +7,21 @@ namespace API.Extensions
     public static class IdentityServicesExtension
     {
         /// <summary>
-        /// Extension to Add IdentityServices In Program.cs 
+        /// This function adds authentication services using JWT bearer authentication scheme and token
+        /// validation parameters to the provided IServiceCollection.
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="config"></param>
-        /// <returns>Services</returns>
+        /// <param name="IServiceCollection">IServiceCollection is an interface that defines a contract
+        /// for a collection of service descriptors. It is used to register and resolve dependencies in
+        /// an application's service container.</param>
+        /// <param name="IConfiguration">IConfiguration is an interface in ASP.NET Core that provides
+        /// access to configuration settings from various sources such as appsettings.json, environment
+        /// variables, command line arguments, and more. It allows developers to easily retrieve
+        /// configuration values in their application code without hardcoding them. In the code snippet
+        /// above, IConfiguration is used</param>
+        /// <returns>
+        /// The `services` object is being returned after adding the authentication services for
+        /// Identity using JWT bearer authentication.
+        /// </returns>
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,IConfiguration config)
         {
             //Barrier config

@@ -1,3 +1,6 @@
+/* The code is a C# implementation of a RESTful API endpoint for user registration and login. It uses
+the ASP.NET Core framework and Entity Framework Core for data access. The `AccountsController` class
+defines two HTTP POST methods: `Register` and `Login`. */
 using System.Security.Cryptography;
 using System.Text;
 using API.Controllers.DTO;
@@ -35,10 +38,25 @@ namespace API.Controllers
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO userDTO)
         {
             //Checking if user exist in DB return error
+            /* This code block is part of the `Register` method in the `AccountsController` class. It
+            checks if the username provided in the `RegisterDTO` object already exists in the
+            database by calling the `UserExist` method. If the username already exists, it returns a
+            `BadRequest` response with the message "Username taken". If the username does not exist,
+            it creates a new `AppUser` object with the username and a salted hash of the password
+            using the `HMACSHA512` algorithm. The salt is generated using the `Key` property of the
+            `HMACSHA512` object. The newly created `AppUser` object is then added to the database
+            and a `UserDTO` object with the username and a JWT token is returned. */
             if (await UserExist(userDTO.Username)) 
                 return BadRequest("Username taken");
             
             //Creating A salted Hash To generate Encoded Password
+            /* This code block is part of the `Register` method in the `AccountsController` class. It
+            creates a new `AppUser` object with the username and a salted hash of the password using
+            the `HMACSHA512` algorithm. The salt is generated using the `Key` property of the
+            `HMACSHA512` object. The `ComputeHash` method of the `HMACSHA512` object is used to
+            generate the hash of the password, which is then stored in the `PasswordHash` property
+            of the `AppUser` object. The `PasswordSalt` property of the `AppUser` object is set to
+            the `Key` property of the `HMACSHA512` object, which is the randomly generated salt. */
             using var hmac =new HMACSHA512();
             var user= new AppUser{
                 UserName=userDTO.Username,
@@ -47,6 +65,13 @@ namespace API.Controllers
             };
 
             //If all dont then adding user in DB
+           /* This code block is part of the `Register` method in the `AccountsController` class. It
+           creates a new `AppUser` object with the username and a salted hash of the password using
+           the `HMACSHA512` algorithm. The salt is generated using the `Key` property of the
+           `HMACSHA512` object. The newly created `AppUser` object is then added to the database
+           using `_context.Users.Add(user)` and saved using `await _context.SaveChangesAsync()`.
+           Finally, a `UserDTO` object with the username and a JWT token is returned using `return
+           new UserDTO{ Username=user.UserName, Token= _tokenService.CreateToken(user) }`. */
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

@@ -1,6 +1,7 @@
 using API.Extensions;
 using API.Middleware;
 
+/* This code is setting up and configuring a web application in C#. */
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

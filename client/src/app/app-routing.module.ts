@@ -9,6 +9,9 @@ import { AuthGuard } from './_gurds/auth.guard';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 
 //Routes has to be object of routs with path for paremeters use :
+/* This code is defining the routes for an Angular application using the `Routes` interface from the
+`@angular/router` module. It defines the different paths and components that should be displayed
+when the user navigates to those paths. */
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'', 

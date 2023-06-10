@@ -14,6 +14,19 @@ import { ToastrService } from 'ngx-toastr';
 
 export class NavComponent implements OnInit {
   model:any={}
+/**
+ * This is a constructor function that takes in three parameters: an account service, a router, and a
+ * toastr service.
+ * @param {AccountService} accountServices - An instance of the AccountService class that is used to
+ * perform operations related to user accounts.
+ * @param {Router} router - The router is a service provided by Angular that allows navigation between
+ * different components and views in a single-page application. It is used to navigate to different
+ * routes and URLs within the application.
+ * @param {ToastrService} toster - The "toster" parameter is an instance of the ToastrService class,
+ * which is a service provided by the Toastr library for displaying notifications and alerts in Angular
+ * applications. It is used in this constructor to inject the ToastrService into the component so that
+ * it can be used to display messages to the user.
+ */
 
   constructor(public accountServices:AccountService, private router: Router,private toster:ToastrService) { }
 
@@ -29,6 +42,10 @@ export class NavComponent implements OnInit {
   //   })
   // }
 
+  /**
+   * This function logs in a user and redirects them to the members page if successful, or displays an
+   * error message if not.
+   */
   login()
   {
     this.accountServices.login(this.model).subscribe({
@@ -38,6 +55,9 @@ export class NavComponent implements OnInit {
   }
 
 
+  /**
+   * The function logs out the user by calling the logout method of the accountServices object.
+   */
   logout(){
     this.accountServices.logout();
   }

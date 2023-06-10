@@ -1,6 +1,38 @@
 # Description
  Meetly is a straightforward social media app built on the Angular 14 framework for the frontend and .NET Core 7 for the backend. It aims to provide users with a platform to connect and interact with others in a user-friendly and intuitive manner.
 
+# Installation
+Copy this code create a file name `install.sh`.
+```
+#!/bin/bash
+
+# Install dotnet sdk 7.0.5
+curl -sS https://dotnetcli.azurewebsites.net/dotnet-install.sh | bash
+
+# Install node version 16.20.0
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
+
+# Install angular 14.2.0
+sudo npm install -g @angular/cli@14
+```
+
+To use this script, save it as a file with a .sh extension, and then run it using the following command:
+
+```
+bash install.sh
+```
+
+This script will download and install the latest versions of dotnet sdk, node, and angular. Once the installation is complete, you can start using these tools to develop your applications.
+
+Here are some additional details about the commands that are used in this script:
+
+* The `curl` command is used to download a file from a URL. In this case, it is used to download the dotnet sdk installer.
+* The `bash` command is used to execute a bash script. In this case, it is used to execute the dotnet sdk installer.
+* The `sudo` command is used to run a command with elevated privileges. In this case, it is used to install node and angular.
+* The `npm` command is used to install Node Package Manager (npm) packages. In this case, it is used to install the angular CLI.
+
+
 # Features:
 
 * User Registration and Authentication: Meetly allows users to create accounts by registering with their email or through social media authentication. It ensures secure access to the app's features and maintains user privacy.

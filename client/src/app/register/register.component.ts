@@ -18,6 +18,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+ /**
+  * The function registers a user account and handles any errors that may occur.
+  */
   register()
   {
     this.accountServices.register(this.model).subscribe({
@@ -31,6 +34,10 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  /**
+   * The function cancels an output from a registration and emits a false value while logging a
+   * message.
+   */
   cancle()
   {
     this.OutputFromReg.emit(false);

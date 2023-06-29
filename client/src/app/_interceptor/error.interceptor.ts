@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { Observable, catchError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Conditional } from '@angular/compiler';
 
 
 /* The ErrorInterceptor class is an HTTP interceptor in TypeScript that handles and displays error
@@ -46,6 +47,7 @@ export default class ErrorInterceptor implements HttpInterceptor {
      type of error that occurred. */
       catchError((error :HttpErrorResponse): any  => 
       {
+        console.log(error);
         if(error)
         {
           switch (error.status){
@@ -65,14 +67,15 @@ export default class ErrorInterceptor implements HttpInterceptor {
                     modelStateErrors.push(error.error.errors[key]);
                   }
                 }
-                throw modelStateErrors;
+                throw modelStateErrors.flat();
               }
               else{
-                this.toster.error(error.error.errors,error.status.toString());
+                this.toster.error(error.error,error.status.toString());
               }
               break;
             case 500:
-              this.router.navigateByUrl('/server-error');
+              const navigationExtrs: NavigationExtras = {state: {error: error.error}}
+              this.router.navigateByUrl('/server-error',navigationExtrs);
               break;
             case 404:
               this.router.navigateByUrl('/not-found');

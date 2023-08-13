@@ -522,3 +522,8 @@ Thumbs.db
 
 .angular/*
 client/.angular/*
+
+#Ignore DB files
+.db
+.db-shm
+.db-wal

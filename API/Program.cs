@@ -1,5 +1,8 @@
+using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.EntityFrameworkCore;
 
 /* This code is setting up and configuring a web application in C#. */
 var builder = WebApplication.CreateBuilder(args);
@@ -27,5 +30,20 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//Used thiis to seed data from data/Userdataseed.json and create new clean user Data
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<API.Data.DataContext>();
+    await context.Database.MigrateAsync();
+    await API.Data.Seed.SeedUsers(context);
+}
+catch(Exception ex)
+{
+    var logger  = services.GetService<ILogger<Program>>();
+    logger.LogError(ex,"An error occur while seeding data/ Migration");
+}
 
 app.Run();

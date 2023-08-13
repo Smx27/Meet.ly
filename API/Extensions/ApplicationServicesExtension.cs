@@ -47,6 +47,9 @@ namespace API.Extensions
 
             //Added JWT
             services.AddScoped<ITokenService,TokenService>();
+
+            //Adding User Repository
+            services.AddScoped<IUserRepository,UserRepository>();
             
             //Returning all the services to extend this and calling in program.cs
             return services;

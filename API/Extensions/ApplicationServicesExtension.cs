@@ -50,6 +50,9 @@ namespace API.Extensions
 
             //Adding User Repository
             services.AddScoped<IUserRepository,UserRepository>();
+
+            //adding automapper service into the application
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             //Returning all the services to extend this and calling in program.cs
             return services;

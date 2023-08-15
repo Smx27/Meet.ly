@@ -17,6 +17,7 @@ builder.Services.ApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
+//http middleware pipelines
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
@@ -31,7 +32,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//Used thiis to seed data from data/Userdataseed.json and create new clean user Data
+//This is to migrate the database and seed the data in the database. with the userDataseed json file
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try

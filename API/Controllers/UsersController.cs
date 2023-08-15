@@ -1,6 +1,8 @@
+using API.Controllers.DTO;
 using API.Data;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +21,19 @@ namespace API.Controllers
         /// Constructor to Init Userrepository
         /// </summary>
         private readonly IUserRepository _userRepository;
-
         /// <summary>
-        /// Constructor to Init userrepository interface
+        /// Constructor to Init Automapper
         /// </summary>
-        /// <param name="context"></param>
-        public UsersController(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        
+        /// <summary>
+        /// Constructor to Init Userrepository
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="mapper"></param> 
+        public UsersController(IUserRepository userRepository,IMapper mapper) 
         {
+            this._mapper = mapper;
             this._userRepository = userRepository;
         }
         
@@ -34,8 +42,8 @@ namespace API.Controllers
         /// </summary>
         /// <returns>List Of all User in JSON</returns>
         [HttpGet]
-        public async Task< ActionResult<IEnumerable<AppUser>>> GetUsers(){
-            var Users = await _userRepository.GetUsersAsync();
+        public async Task< ActionResult<IEnumerable<MemberDTO>>> GetUsers(){
+            var Users = await _userRepository.GetMembersAsync();
             return Ok(Users);
         }
 
@@ -45,9 +53,10 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Specific Users Details In JSON</returns>
-        public async Task<ActionResult<AppUser>> GetUserbyID(int id)
+        public async Task<ActionResult<MemberDTO>> GetUserbyID(int id)
         {
-            return await _userRepository.GetUserByIdAsync(id);
+            var user = await _userRepository.GetUserByIdAsync(id);
+            return Ok(_mapper.Map<MemberDTO>(user));
         }
 
         [HttpGet("{username}")]
@@ -56,9 +65,10 @@ namespace API.Controllers
         /// </summary>
         /// <param name="username"></param>
         /// <returns>A specific user by username</returns>
-        public async Task<ActionResult<AppUser>> GetUser(string username)
+        public async Task<ActionResult<MemberDTO>> GetUser(string username)
         {
-            return await _userRepository.GetUserByUsernameAsync(username);
+            var user = await _userRepository.GetMemberAsync(username);
+            return Ok(user);
         }
 
     }

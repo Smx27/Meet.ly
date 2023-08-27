@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_models/user';
 import { registerUser } from '../_models/registerUser';
+import { environment } from 'src/environments/environment';
 
 //this is use to send HTTPS requests
 
@@ -12,8 +13,7 @@ import { registerUser } from '../_models/registerUser';
   providedIn: 'root',
 })
 export class AccountService {
-  baseUrl = 'https://localhost:5001/api/';
-
+  baseUrl = environment.apiUrl;
   //Using Union type to fix the null user issue
   /* The line `private currentuserSource= new BehaviorSubject<User | null>(null);` is defining a private
 property called `currentuserSource` in the `AccountService` class. It is using a Union type to fix
@@ -53,7 +53,6 @@ observable using `this.currentuserSource.next(user)`. Finally, the user object i
 allows the user to stay logged in even if they refresh the page or close the browser. */
   //Settingup Local storage to persist user
   login(model: any) {
-    console.log(model);
     return this.http.post<User>(this.baseUrl + 'accounts/login', model).pipe(
       //UsingRxjs
       map((response: User) => {

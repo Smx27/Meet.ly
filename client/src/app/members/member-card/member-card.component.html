@@ -3,12 +3,16 @@
         <img src="{{member.photoUrl}}" class="card-img-top" alt="{{member.knownAs}}">
         <ul class="list-inline member-icon animate text-center">
             <li class="list-inline-item">
-                <button class="btn btn-primary me-2">
+                <button routerLink="/members/{{member.userName}}" class="btn btn-primary me-2">
                     <i class="fa fa-user"></i>
                 </button>
+            </li>
+            <li class="list-inline-item">
                 <button class="btn btn-primary me-2">
                     <i class="fa fa-heart"></i>
                 </button>
+            </li>
+            <li class="list-inline-item">
                 <button class="btn btn-primary me-2">
                     <i class="fa fa-envelope"></i>
                 </button>

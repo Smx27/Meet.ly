@@ -1,0 +1,111 @@
+<div class="row" x-data="{ rightSide: false, leftSide: false }" *ngIf="member">
+    <div class="main custombody col-12">
+      <div class="main-container">
+        <div class="profile">
+          <div class="profile-avatar">
+            <img src="{{member.photoUrl}}" alt="" class="profile-img">
+            <div class="profile-name">{{member.knownAs}}</div>
+          </div>
+          <img src="" alt="" class="profile-cover">
+          <div class="profile-menu">
+            <a class="profile-menu-link active">Timeline</a>
+            <a class="profile-menu-link">About</a>
+            <a class="profile-menu-link">Friends</a>
+            <a class="profile-menu-link">Photos</a>
+            <a class="profile-menu-link">More</a>
+          </div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-left">
+            <div class="intro box">
+              <div class="intro-title">
+                Introduction
+                <button class="intro-menu"></button>
+              </div>
+              <div class="info">
+                <div class="info-item">
+                  <strong>Location:</strong>
+                  <a href="#">{{member.city}}, {{member.country}}</a>
+                </div>
+                <div class="info-item">
+                  <strong>Age:</strong>
+                  <a href="#">{{member.age}}</a>
+                </div>
+                <div class="info-item">
+                  <strong>Last active:</strong>
+                  <a href="#">{{member.lastActive | date: 'hh:mm a - dd-MMM'}}</a>
+                </div>
+                <div class="info-item">
+                  <strong>Member since:</strong>
+                  <a href="#">{{member.created | date: 'dd-MMM-yyyy'}}</a>
+                </div>
+              </div>
+            </div>
+            <div class="pages box">
+              <div class="intro-title">
+                Your pages
+                <button class="intro-menu"></button>
+              </div>
+              <div class="user">
+                <img src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0f" alt="" class="user-img">
+                <div class="username">Chandelio</div>
+              </div>
+              <div class="user">
+                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=d5849d81af587a09dbcf3f11f6fa122f" alt="" class="user-img">
+                <div class="username">Janet Jolie</div>
+              </div>
+              <div class="user">
+                <img src="https://images.unsplash.com/photo-1546539782-6fc531453083?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" class="user-img">
+                <div class="username">Patrick Watsons</div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-right">
+            <div class="album box">
+              <div class="status-main">
+                <img src="{{member.photoUrl}}" class="status-img" />
+                <div class="album-detail">
+                  <div class="album-title"><strong>{{member.knownAs}}</strong> create new <span>album</span></div>
+                  <div class="album-date">Last active {{member.lastActive | date:'dd a'}}</div>
+                </div>
+                <button class="intro-menu"></button>
+              </div>
+              <div class="album-content">When the bass drops, so do my problems.
+                <div class="album-photos">
+                  <img src="https://images.unsplash.com/photo-1508179719682-dbc62681c355?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2378&q=80" alt="" class="album-photo" />
+                  <div class="album-right">
+                    <img src="https://images.unsplash.com/photo-1502872364588-894d7d6ddfab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" alt="" class="album-photo" />
+                    <img src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="" class="album-photo" />
+                  </div>
+                </div>
+              </div>
+              <div class="album-actions">
+                <a href="#" class="album-action">
+                  <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+                  </svg>
+                  87
+                </a>
+                <a href="#" class="album-action">
+                  <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                  </svg>
+                  20
+                </a>
+                <a href="#" class="album-action">
+                  <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" viewBox="0 0 24 24">
+                    <path d="M17 1l4 4-4 4" />
+                    <path d="M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4" />
+                    <path d="M21 13v2a4 4 0 01-4 4H3" />
+                  </svg>
+                  13
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+   
+  </div>

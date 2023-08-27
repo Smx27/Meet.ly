@@ -16,7 +16,7 @@ are no components, directives, or pipes declared in this module. The `exports` a
     CommonModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
-      positionClass: 'tost-bottom-left'
+      positionClass: 'toast-bottom-left'
     })
   ],
   exports:[

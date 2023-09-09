@@ -910,3 +910,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+.hide-headings .mat-tab-header {
+  display: none;
+}
+.ngx-gallery { display: inline-block; margin-bottom: 20px; }

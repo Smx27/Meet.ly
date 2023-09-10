@@ -12,7 +12,7 @@
                 </div>
                 <div class="about">
                     <h5>About</h5>
-                    <p>{{member.introduction}}</p>
+                    <p [innerHTML]="member.introduction">{{member.introduction}}</p>
                 </div>
             </div>
         </div>
@@ -45,10 +45,17 @@
                             <input type="text" class="form-control" id="gender" [(ngModel)]="member.gender" name="gender" placeholder="Enter phone number">
                         </div>
                     </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label for="introduction">Introduction</label>
+                            <editor [apiKey]="mceApiKey" [init]="tinymceConfig"
+                             name="introduction"  class="form-control" [(ngModel)]="member.introduction"  id="introduction" rows="6" ></editor>
+                        </div>
+                    </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="form-group">
                             <label for="lookingFor">Looking For</label>
-                            <textarea name="lookingFor"  class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor" id="lookingFor" rows="6" ></textarea>
+                            <textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor" id="lookingFor" rows="6" ></textarea>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">

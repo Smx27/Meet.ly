@@ -35,6 +35,10 @@ export class MembersService {
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
+  updateMember(member:Member)
+  {
+    return this.http.put<Member>(this.baseUrl+'users',member);
+  }
   //removed this function because jwt.interceptor.ts is now handling the token
   /**
    * The function retrieves the user's token from local storage and returns an HTTP options object with

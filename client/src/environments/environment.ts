@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl : 'https://localhost:5001/api/'
+  apiUrl : 'https://localhost:5001/api/',
+  tinymceApikey: '9m3atyqvmyv2f7xsl4yu356dp5gfcrb3c17ne8zpen4kaoke'
 };
 
 /*

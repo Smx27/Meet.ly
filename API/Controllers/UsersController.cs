@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Controllers.DTO;
 using API.Data;
 using API.Entities;
@@ -71,5 +72,18 @@ namespace API.Controllers
             return Ok(user);
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDTO member){
+            var username=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            if(user==null) return BadRequest();
+
+            _mapper.Map(member,user);
+
+            if(await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("unable to update user");
+        } 
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
@@ -13,7 +13,14 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
+  //Grabbing from data in ts
   @ViewChild('editMember')editForm:NgForm | undefined;
+  //Prevent user from changing paeg if there any changes 
+  @HostListener('window:beforeunload',['$event']) unloadEvent($event:any){
+    if(this.editForm?.dirty){
+      $event.returnValue=true;
+    }
+  }
   member:Member | undefined;
   user: User | null =null;
 

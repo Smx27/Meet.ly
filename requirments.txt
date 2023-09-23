@@ -9,3 +9,6 @@ https://github.com/nodesource/distributions
 
 to install angular 14.2.0 
 sudo npm install -g @angular/cli@14
+
+to install react 18.2.0
+npm create vite@latest

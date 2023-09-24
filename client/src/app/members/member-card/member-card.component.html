@@ -1,7 +1,8 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <div class="card mb-4" *ngIf="member">
     <div class="card-img-wrapper" >
         <img src="{{member.photoUrl}}" class="card-img-top" alt="{{member.knownAs}}">
-        <ul class="list-inline member-icon animate text-center">
+        <!-- <ul class="list-inline member-icon animate text-center">
             <li class="list-inline-item">
                 <button routerLink="/members/{{member.userName}}" class="btn btn-primary me-2">
                     <i class="fa fa-user"></i>
@@ -17,11 +18,29 @@
                     <i class="fa fa-envelope"></i>
                 </button>
             </li>
-        </ul>
+        </ul> -->
+                <!-- <div> -->
+                    <!-- <img src="https://i.imgur.com/HlZSVa5.jpg"> -->
+                    <!-- <h2 routerLink="/members/{{member.userName}}">Link</h2> -->
+                    <!-- <p>Graphic Designer</p> -->
+                    <span>
+                      <button type="button" name="btnUser" routerLink="/members/{{member.userName}}" title="Go to profile">
+                          <i style="--i:1" class="fa fa-user"></i>
+                      </button>
+                        <button title="Like">
+
+                            <i style="--i:2" class="fa fa-heart"></i>
+                        </button>
+                        <button title="Message">
+
+                            <i style="--i:3" class="fa fa-envelope"></i>
+                        </button>
+                    </span>
+                <!-- </div> -->
     </div>
     <div class="card-body p-1">
         <h6 class="card-title text-center mb-1">
-            <i class="fa fa-user me-2"></i>
+            <!-- <i class="fa fa-user me-2"></i> -->
             {{member.knownAs}}
         </h6>
         <p class="card-text text-muted text-center">

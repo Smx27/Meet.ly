@@ -1,4 +1,4 @@
-.card:hover img{
+/* .card:hover img{
     transform: scale(1.1);
     transition: all 0.5s ease-out;
     transition-duration: 500ms;
@@ -34,4 +34,131 @@
     transition-duration: 500ms;
 }
 
+ */
 
+
+ /* global style */
+* {
+	padding: 0;
+	margin: 0;
+	font-family: arial;
+	text-align: center;
+	box-sizing: border-box;
+	color: #222831
+}
+
+
+.card {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/* height: 370px;
+	width: 260px; */
+    /* max-height: 850px; */
+    max-width: 250px;
+	background: #e2e2e2;
+	text-align: center;
+	border-radius: 5px;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-between;
+	padding: 20px 20px;
+    -webkit-box-shadow: 2px 7px 13px -1px rgba(0,0,0,0.29);
+    -moz-box-shadow: 2px 7px 13px -1px rgba(0,0,0,0.29);
+    box-shadow: 2px 7px 23px -1px rgba(0,0,0,0.29);
+}
+.card::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/* background-image: linear-gradient(to bottom right, #7677d1, #756f97); */
+    background: rgb(241,222,255);
+    background: linear-gradient(90deg, rgba(241,222,255,1) 40%, rgb(255, 146, 164) 100%);
+	clip-path: circle(40% at right 100%);
+	opacity: 0.3;
+	z-index: -1
+}
+.card::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: linear-gradient(to top right,rgb(55, 0, 255) 40%, rgb(255, 215, 222) 100%);
+    clip-path: circle(30% at left 10%);
+	opacity: 0.2;
+	z-index: -1
+}
+.card img {
+	/* /* height: 200px; */
+	max-width: 200px;  
+	border-radius: 50%;
+	/* object-fit: cover; */
+	align-self: center;
+	opacity: 0.8;
+	border: 5px solid #FFF;
+	transition: 0.5s;
+
+}
+
+span {
+	height: 20%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	width: 60%;
+	padding: 10px 0;
+	margin: 0 auto;
+
+}
+i {
+	opacity: 0;
+    background: none;
+	font-size: 20px;
+	transform: translateY(30px);
+	transition: 0.5s;
+	transition-delay: calc(0.1s * var(--i));
+}
+i:hover{
+	color: #026BC1;
+	transition: 0.3s;
+	transition-delay: 10ms;
+}
+.card:hover i {
+	transform: translateY(0px);
+	opacity: 1;
+}
+.card:hover img {
+	opacity: 1;
+}
+button{
+    border: none;
+    background: #e2e2e2;
+}
+@media (min-width: 850px) {
+   
+.card{
+    min-height: 320px;
+    max-width: 360px;
+}
+
+h6{
+    padding-top: 3px;
+}
+span{
+    width:10%;
+    position: absolute;
+    padding-bottom: 30px;
+}
+.card-body{
+    margin-top: 25%;
+}
+}
+.fb:hover{color:#3B5998}
+.tw:hover{color:#32CBFE}
+.ins:hover{color:#DB2E69}
+.lin:hover{color:#026BC1}

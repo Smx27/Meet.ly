@@ -58,8 +58,7 @@ allows the user to stay logged in even if they refresh the page or close the bro
       map((response: User) => {
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentuserSource.next(user);
+          this.setCurrentUser(user);
         }
         return user;
       })
@@ -75,8 +74,7 @@ contains the user's registration details such as email, password, and username. 
       map((response: User) => {
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentuserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     );
@@ -90,6 +88,7 @@ contains the user's registration details such as email, password, and username. 
   * current user using the currentuserSource.next
   */
   setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentuserSource.next(user);
   }
 

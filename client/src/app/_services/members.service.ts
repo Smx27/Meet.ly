@@ -54,6 +54,13 @@ export class MembersService {
       })
     )
   }
+  deletePhoto(photoId: number){
+    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId,{});
+  }
+
+  setMainPhoto(photoId: number){
+    return this.http.put(this.baseUrl + 'users/add-main-photo/' + photoId,{});
+  }
   //removed this function because jwt.interceptor.ts is now handling the token
   /**
    * The function retrieves the user's token from local storage and returns an HTTP options object with

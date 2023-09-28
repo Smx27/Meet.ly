@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <div class="card mb-4" *ngIf="member">
     <div class="card-img-wrapper" >
-        <img src="{{member.photoUrl}}" class="card-img-top" alt="{{member.knownAs}}">
+        <img src="{{member.photoUrl || './assets/user.png'}}" class="card-img-top" alt="{{member.knownAs}}">
         <!-- <ul class="list-inline member-icon animate text-center">
             <li class="list-inline-item">
                 <button routerLink="/members/{{member.userName}}" class="btn btn-primary me-2">

@@ -78,7 +78,8 @@ namespace API.Controllers
             //Returning the newly created user details 
             return new UserDTO{
                 Username=user.UserName,
-                Token= _tokenService.CreateToken(user)
+                Token= _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(p=> p.IsMain)?.Url
             };
         }
 
@@ -90,7 +91,9 @@ namespace API.Controllers
         /// <returns>User Data</returns>
         public async Task<ActionResult<UserDTO>> Login(LoginDTO userDTO){
             //fetching the user
-            var user = await _context.Users.SingleOrDefaultAsync(u=> u.UserName==userDTO.Username);
+            var user = await _context.Users
+            .Include(p=> p.Photos)
+            .SingleOrDefaultAsync(u=> u.UserName==userDTO.Username);
 
             //if no User Found Then Sending NULL/Unauth Error
             if(user==null) return Unauthorized();
@@ -106,7 +109,8 @@ namespace API.Controllers
             //returning user If its a valid user 
             return new UserDTO{
                 Username=user.UserName,
-                Token= _tokenService.CreateToken(user)
+                Token= _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(p=> p.IsMain)?.Url
             };
         }
 

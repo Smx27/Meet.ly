@@ -11,3 +11,11 @@ ul li:hover{
 .click{
     color: #FF6969;
 }
+
+.nav-item img{
+    max-height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+    display: inline;
+}

@@ -5,6 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 /* This is a module definition in Angular. It imports and configures two external modules:
@@ -24,14 +25,16 @@ are no components, directives, or pipes declared in this module. The `exports` a
     NgxGalleryModule,
     NgxSpinnerModule.forRoot({
       type:'pacman'
-    })
+    }),
+    FileUploadModule
   ],
   exports:[
     BsDropdownModule,
     ToastrModule,
     TabsModule,
     NgxGalleryModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FileUploadModule
   ]
 })
 export class SharedModule { }

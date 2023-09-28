@@ -529,4 +529,5 @@ client/.angular/*
 .db-wal
 
 #custom
-API/appsettings.json
+*/appsettings.json
+appsettings.json

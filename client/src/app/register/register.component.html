@@ -5,52 +5,20 @@
         </div>
         <div class="row clearfix">
             <div class="">
-                <form #registerForm="ngForm" (ngSubmit)="register()">
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
-                        <input type="email" [(ngModel)]="model.username" name="username" placeholder="username" required />
-                    </div>
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                        <input type="password" [(ngModel)]="model.password" name="password" placeholder="Password" required />
-                    </div>
-                    <!-- <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                        <input type="password" name="cnfpassword" placeholder="Re-type Password" required />
-                    </div>
-                    <div class="row clearfix">
-                        <div class="col_half">
-                            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                                <input type="text" name="name" placeholder="First Name" />
-                            </div>
-                        </div>
-                        <div class="col_half">
-                            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                                <input type="text" name="name" placeholder="Last Name" required />
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="input_field radio_option">
-                        <input type="radio" name="radiogroup1" id="rd1">
-                        <label for="rd1">Male</label>
-                        <input type="radio" name="radiogroup1" id="rd2">
-                        <label for="rd2">Female</label>
-                    </div> -->
-                    <!-- We only support Indian only no country list -->
-                    <!-- <div class="input_field select_option">
-                        <select>
-                            <option>Select a country</option>
-                            <option>India</option>
-                            
-                        </select>
-                        <div class="select_arrow"></div>
-                    </div> -->
-                    <!-- <div class="input_field checkbox_option">
-                        <input type="checkbox" id="cb1">
-                        <label for="cb1">I agree with terms and conditions</label>
-                    </div> -->
+                <form [formGroup]="registerForm" (ngSubmit)="register()">
+                    <app-text-input [formControl]="$any(registerForm.controls['username'])"
+                    [label]="'username'"></app-text-input>
+                    <app-text-input [formControl]="$any(registerForm.controls['password'])"
+                    [label]="'password'" [type]="'password'"></app-text-input>
+                    <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])"
+                    [label]="'Confirm Password'" [type]="'password'"></app-text-input>
                     <input class="button" type="submit" value="Register" />
-                    <input class="button" type="button"  (click)="cancle()" value="Cancle" />
+                    <input class="button btn" type="button"  (click)="cancle()" value="Cancle" />
                     
                 </form>
             </div>
         </div>
     </div>
 </div>
+<p>Form value: {{registerForm.value  | json}}</p>
+<p>Form value: {{registerForm.status  | json}}</p>

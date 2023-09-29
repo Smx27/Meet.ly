@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Meet.ly",
-    "dateExported": "2023-05-30T16:48:38.476Z",
+    "dateExported": "2023-09-29T07:53:35.010Z",
     "version": "1.1",
     "folders": [
         {
@@ -25,38 +25,26 @@
             "colId": "e925619e-1428-4b44-987d-4982c50b155e",
             "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
             "name": "Login",
-            "url": "https://localhost:5001/api/accounts/register",
+            "url": "{{url}}/api/accounts/login",
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-05-30T16:38:13.725Z",
-            "modified": "2023-05-30T16:46:54.035Z",
+            "modified": "2023-08-13T20:04:38.408Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"Username\": \"admin\",\n  \"Password\": \"1234\"\n}",
+                "raw": "{\n\t\"username\": \"marilyn\",\n\t\"password\": \"password\"\n}",
                 "form": []
             },
-            "tests": []
-        },
-        {
-            "_id": "a177eafd-659b-4b41-bbef-51769e705f01",
-            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
-            "containerId": "a16ca5a4-0570-459c-9b24-0806e4475be0",
-            "name": "Register Validation Error",
-            "url": "https://localhost:5001/api/accounts/register",
-            "method": "POST",
-            "sortNum": 50000,
-            "created": "2023-05-30T16:39:40.017Z",
-            "modified": "2023-05-30T16:39:40.017Z",
-            "headers": [],
-            "params": [],
-            "body": {
-                "type": "json",
-                "raw": "{\n  \"Username\": \"test\",\n  \"Password\": \"\"\n}",
-                "form": []
-            },
-            "tests": []
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{token}}"
+                }
+            ]
         },
         {
             "_id": "5fc40b65-4c89-47bd-b7fe-b89910e03799",
@@ -67,9 +55,13 @@
             "method": "GET",
             "sortNum": 60000,
             "created": "2023-05-30T16:27:13.719Z",
-            "modified": "2023-05-30T16:43:55.162Z",
+            "modified": "2023-08-13T16:32:43.231Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
         },
         {
@@ -81,9 +73,13 @@
             "method": "GET",
             "sortNum": 70000,
             "created": "2023-05-30T16:30:03.512Z",
-            "modified": "2023-05-30T16:43:57.467Z",
+            "modified": "2023-08-13T16:33:14.440Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
         },
         {
@@ -95,9 +91,13 @@
             "method": "GET",
             "sortNum": 80000,
             "created": "2023-05-30T16:30:57.193Z",
-            "modified": "2023-05-30T16:43:59.589Z",
+            "modified": "2023-08-13T16:42:41.922Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
         },
         {
@@ -109,9 +109,13 @@
             "method": "GET",
             "sortNum": 90000,
             "created": "2023-05-30T16:31:30.852Z",
-            "modified": "2023-05-30T16:44:01.580Z",
+            "modified": "2023-08-13T16:43:03.092Z",
             "headers": [],
             "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
         },
         {
@@ -119,19 +123,177 @@
             "colId": "e925619e-1428-4b44-987d-4982c50b155e",
             "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
             "name": "Register",
-            "url": "https://localhost:5001/api/accounts/register",
-            "method": "GET",
+            "url": "{{url}}/api/accounts/register",
+            "method": "POST",
             "sortNum": 100000,
             "created": "2023-05-30T16:48:28.300Z",
-            "modified": "2023-05-30T16:48:28.300Z",
+            "modified": "2023-09-29T07:52:26.410Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"Username\": \"sumit\",\n  \"Password\": \"1234\"\n}",
+                "raw": "{\n    \"gender\": \"male\",\n    \"username\": \"boi\",\n    \"knownAs\": \"Boi\",\n    \"dateOfBirth\": \"1985-01-23\",\n    \"city\": \"London\",\n    \"country\": \"UK\",\n    \"password\": \"password\"\n}",
                 "form": []
             },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": [
+                {
+                    "type": "json-query",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{token}}"
+                }
+            ]
+        },
+        {
+            "_id": "1b2ddedb-b3ec-4af4-bb73-72c4fdba9fa3",
+            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+            "containerId": "a16ca5a4-0570-459c-9b24-0806e4475be0",
+            "name": "GetUserByusername",
+            "url": "{{url}}/api/users/marilyn",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2023-08-13T20:05:57.872Z",
+            "modified": "2023-09-19T20:28:10.187Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
+        },
+        {
+            "_id": "7e8d4c06-5c68-45bb-a9e7-da935b296c9c",
+            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+            "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
+            "name": "GetuserByID",
+            "url": "{{url}}/api/users/id/2",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-08-13T17:55:41.709Z",
+            "modified": "2023-09-23T12:16:39.479Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "13dc17ad-3f43-4f2e-b4e2-6d9ca1ed1d38",
+            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+            "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
+            "name": "GetAllUsers",
+            "url": "{{url}}/api/users/",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2023-08-13T17:57:57.514Z",
+            "modified": "2023-08-13T17:58:15.249Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "178edb5b-92d8-41e0-8cb5-6f697c5bdc8c",
+            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+            "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
+            "name": "Update user",
+            "url": "https://localhost:5001/api/users",
+            "method": "PUT",
+            "sortNum": 140000,
+            "created": "2023-09-10T08:14:46.531Z",
+            "modified": "2023-09-10T08:45:35.675Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\"knownAs\": \"Marilyn\",\n\"gender\": \"female\",\n\"lookingFor\": \"Veniam deserunt culpa excepteur laborum ullamco sint ullamco excepteur adipisicing elit ad consectetur elit ipsum. Labore eiusmod aute magna Updated\",\n\"interests\": \"Minim aliqua aliquip officia eu update\",\n  \"city\": \"Bend\",\n\"country\": \"Mauritania\",\n\"introduction\":\"Updated\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a177eafd-659b-4b41-bbef-51769e705f01",
+            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+            "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
+            "name": "Register Validation Error",
+            "url": "https://localhost:5001/api/accounts/register",
+            "method": "POST",
+            "sortNum": 145000,
+            "created": "2023-05-30T16:39:40.017Z",
+            "modified": "2023-08-13T16:29:43.733Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"Username\": \"test\",\n  \"Password\": \"\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "abfed219-81d8-4d51-b601-ffd4c6e52b36",
+            "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+            "containerId": "7fce5b1b-2d39-4d5d-b117-7764008557f8",
+            "name": "AddPhoto",
+            "url": "{{url}}/api/users/add-photo",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2023-09-19T20:11:14.852Z",
+            "modified": "2023-09-23T12:32:57.425Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "File",
+                        "value": "/home/smx27/Downloads/images.png"
+                    }
+                ]
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "1cc35b61-1f60-434e-9013-3a27acc15c0c",
+                        "colId": "e925619e-1428-4b44-987d-4982c50b155e",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
         }
-    ]
+    ],
+    "settings": {
+        "docs": "This is a simple api collection to use our backend ",
+        "options": {
+            "baseUrl": "https://localhost:5001/"
+        },
+        "envId": "f9b5cbc4-5333-493e-89ed-30d146e5c4ca"
+    }
 }

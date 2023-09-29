@@ -129,10 +129,9 @@ body {
     background: #fafafa;
 }
 
-.form_wrapper input[type="submit"] {
+.form_wrapper button[type="submit"] {
     background: #FF6969;
     height: 35px;
-    line-height: 35px;
     width: 100%;
     border: none;
     outline: none;
@@ -146,7 +145,7 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-.form_wrapper input[type="submit"]:hover {
+.form_wrapper button[type="submit"]:hover {
     background: #e1a70a;
 }
 .form_wrapper input[type="button"]:hover {
@@ -159,21 +158,11 @@ body {
     background-color: transparent;
 }
 
-.form_wrapper input[type="submit"]:focus {
+.form_wrapper button[type="submit"]:focus {
     background: #e1a70a;
 }
 
-.form_wrapper input[type="checkbox"],
-.form_wrapper input[type="radio"] {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
+
 
 .form_container .row .col_half.last {
     border-left: 1px solid #ccc;

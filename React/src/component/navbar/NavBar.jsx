@@ -9,15 +9,15 @@ const NavBar = () => {
 
   return (
     <div>
-      <nav className="bg-[#FB6F92] dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+      <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a href="#" className="flex items-center">
-            <h2 className="self-center text-2xl font-semibold whitespace-nowrap text-slate-900" style={{ fontFamily: "Dancing Script" }}>
-              Meet.ly
+            <h2 className="self-center text-2xl font-semibold whitespace-nowrap  text-black" style={{ fontFamily: "Dancing Script" }}>
+            Meet<span className='text-[#DC143C]'>.ly</span>
             </h2>
           </a>
           <div className="flex md:order-2">
-            <button className="relative py-2 px-8 text-black text-base font-bold uppercase rounded-[50px] overflow-hidden bg-transparent transition-all duration-400 ease-in-out shadow-lg hover:scale-105 hover:text-black hover:border-transparent hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#FF8FAB] before:to-[#FFC2D1] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-[50px] hover:before:left-0">
+            <button className="relative py-2 px-8 text-black text-base font-bold uppercase rounded-[50px] overflow-hidden bg-transparent transition-all duration-400 ease-in-out shadow-lg hover:scale-105 hover:text-white hover:border-transparent hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#C70039] before:to-[#FF0032] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-[50px] hover:before:left-0">
               login
             </button>
 

@@ -13,5 +13,8 @@ namespace API.Helpers
             set => _pageSize = (value > MaxPageSize)? MaxPageSize: value;
         }
         
+        public int MinAge { get; set; } = 18;
+        public int MaxAge { get; set; } = 80;
+
     }
 }

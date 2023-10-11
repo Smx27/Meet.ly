@@ -7,6 +7,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileUploadModule } from 'ng2-file-upload';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 /* This is a module definition in Angular. It imports and configures two external modules:
@@ -28,7 +29,8 @@ are no components, directives, or pipes declared in this module. The `exports` a
       type:'pacman'
     }),
     FileUploadModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   exports:[
     BsDropdownModule,
@@ -37,7 +39,8 @@ are no components, directives, or pipes declared in this module. The `exports` a
     NgxGalleryModule,
     NgxSpinnerModule,
     FileUploadModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    PaginationModule
   ]
 })
 export class SharedModule { }

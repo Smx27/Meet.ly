@@ -531,3 +531,7 @@ client/.angular/*
 #custom
 */appsettings.json
 appsettings.json
+API/appsettings.json
+API/App.db-wal
+API/App.db-shm
+.gitignore

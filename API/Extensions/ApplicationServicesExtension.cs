@@ -44,7 +44,7 @@ namespace API.Extensions
             services.AddCors(o=>o.AddPolicy(name: "CORS",builder=>{
                 builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
             }));
-
+            
 
             //Added JWT
             services.AddScoped<ITokenService,TokenService>();

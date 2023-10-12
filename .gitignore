@@ -535,3 +535,4 @@ API/appsettings.json
 API/App.db-wal
 API/App.db-shm
 .gitignore
+API/appsettings.json

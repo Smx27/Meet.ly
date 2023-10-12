@@ -80,10 +80,14 @@ export class MembersService {
    * expected to be of type `Member`.
    */
   getMember(username: string){
-    if(this.members.length>0) {
-      const member = this.members.find(m=> m.userName===username);
-      return of(member);
-    }
+    
+    /* This code is retrieving a member from the `memberCache` map based on their username. */
+    const member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.result),[])
+      .find((member: Member) => member.userName == username)
+    
+      if(member) return of(member);
+
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 

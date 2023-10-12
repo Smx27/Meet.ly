@@ -4,6 +4,7 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -38,6 +39,11 @@ namespace API.Data
             var maxDOB = DateOnly.FromDateTime(DateTime.Now.AddYears(-userParams.MinAge));
 
             query = query.Where(u=> u.DateOfBirth >= minDOB && u.DateOfBirth <= maxDOB);
+            query = userParams.OrderBy switch
+            {
+                "created" => query.OrderByDescending(u=> u.Created),
+                _ => query.OrderByDescending(u=> u.LastActive)
+            };
 
             return await PagedList<MemberDTO>.CreateAsync(
                 query.AsNoTracking().ProjectTo<MemberDTO>(_mapper.ConfigurationProvider),

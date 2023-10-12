@@ -11,6 +11,7 @@ import { UserParams } from '../_models/userParams';
 })
 export class MembersService {
   members:Member[] = [];
+  memberCache = new Map();
 
   baseUrl= environment.apiUrl;
 
@@ -24,10 +25,20 @@ export class MembersService {
    * request is expected to be an array of `Member` objects.
    */
   getMembers(userParams: UserParams){
+    const key = Object.values(userParams).join('-');
+
+    const response = this.memberCache.get(key);
+    
+    if (response) return of(response);
+
     let params = this.getPaginationHeaders(userParams);
 
-    // if(this.members.length > 0) return of(this.members);
-    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users',params)
+    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users',params).pipe(
+      map(response =>{
+        this.memberCache.set(key,response);
+        return response;
+      })
+    )
   }
 
   private getPaginatedResults<T>(url: string,params: HttpParams) {
@@ -57,6 +68,7 @@ export class MembersService {
     params = params.append('minAge', userParams.minAge);
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
+    params = params.append('orderBy', userParams.orderBy);
 
     return params;
   }
@@ -68,10 +80,14 @@ export class MembersService {
    * expected to be of type `Member`.
    */
   getMember(username: string){
-    if(this.members.length>0) {
-      const member = this.members.find(m=> m.userName===username);
-      return of(member);
-    }
+    
+    /* This code is retrieving a member from the `memberCache` map based on their username. */
+    const member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.result),[])
+      .find((member: Member) => member.userName == username)
+    
+      if(member) return of(member);
+
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 

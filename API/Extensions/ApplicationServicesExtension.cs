@@ -44,7 +44,7 @@ namespace API.Extensions
             services.AddCors(o=>o.AddPolicy(name: "CORS",builder=>{
                 builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
             }));
-
+            
 
             //Added JWT
             services.AddScoped<ITokenService,TokenService>();
@@ -58,6 +58,7 @@ namespace API.Extensions
             //Adding Photo Service
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService,PhotoService>();
+            services.AddScoped<LogUserActivity>();
             
             //Returning all the services to extend this and calling in program.cs
             return services;

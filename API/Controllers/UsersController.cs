@@ -1,6 +1,7 @@
 using API.Controllers.DTO;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -43,8 +44,20 @@ namespace API.Controllers
         /// </summary>
         /// <returns>List Of all User in JSON</returns>
         [HttpGet]
-        public async Task< ActionResult<IEnumerable<MemberDTO>>> GetUsers(){
-            var Users = await _userRepository.GetMembersAsync();
+        public async Task< ActionResult<PagedList<MemberDTO>>> GetUsers([FromQuery]UserParams userParams){
+
+            var currentUser = await _userRepository.GetUserByUsernameAsync(User.getUserName());
+
+            userParams.CurrentUsername = currentUser.UserName;
+            
+            if(string.IsNullOrEmpty(userParams.Gender)){
+                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+
+            var Users = await _userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(Users.CurrentPage,Users.PageSize,Users.TotalCount,Users.TotalPages));
+            
             return Ok(Users);
         }
 
@@ -136,6 +149,51 @@ namespace API.Controllers
            }
 
            return BadRequest("Error while adding photo!");
+        }
+
+        [HttpPut("add-main-photo/{photoId}")]
+        public async Task<ActionResult> addMainPhoto(int photoId){
+            AppUser user = await _userRepository.GetUserByUsernameAsync(User.getUserName());
+            if(user == null) return NotFound();
+
+            var photo = user.Photos.FirstOrDefault(p=> p.Id == photoId);
+
+            if(photo == null) return NotFound();
+            
+            if(photo.IsMain) return BadRequest("Photo already set to main.");
+
+            var currentPhoto = user.Photos.FirstOrDefault(p=> p.IsMain);
+
+            if(currentPhoto != null) currentPhoto.IsMain = false;
+
+            photo.IsMain = true;
+
+            if(await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Problem while setting the photo as main");
+            
+        }
+
+        [HttpDelete("delete-photo/{photoId}")]
+        public async Task<ActionResult> DeletePhoto(int photoId){
+            AppUser user = await _userRepository.GetUserByUsernameAsync(User.getUserName());
+            if(user == null) return NotFound();
+
+            var photo = user.Photos.FirstOrDefault(p=> p.Id == photoId);
+
+            if(photo == null) return NotFound();
+
+            if(photo.IsMain) return BadRequest("This is your main photo you cant delete!");
+
+            if(!string.IsNullOrEmpty(photo.PublicId)){
+                var result = await _photoService.DeletePhotoAsync(photo.PublicId);
+                if(result.Error != null) return BadRequest(result.Error.Message);
+            }
+            user.Photos.Remove(photo);
+            if(await _userRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Problem while setting the photo as main");
+            
         }
     }
 }

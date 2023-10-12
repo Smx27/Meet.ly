@@ -3,7 +3,7 @@
       <div class="main-container">
         <div class="profile">
           <div class="profile-avatar">
-            <img src="{{member.photoUrl}}" alt="" class="profile-img">
+            <img src="{{member.photoUrl || './assets/user.png'}}" alt="" class="profile-img">
             <div class="profile-name">{{member.knownAs}}</div>
           </div>
           <img src="" alt="" class="profile-cover">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="info-item">
                   <strong>Last active:</strong>
-                  <a href="#">{{member.lastActive | date: 'hh:mm a - dd-MMM'}}</a>
+                  <a href="#">{{member.lastActive | timeago}}</a>
                 </div>
                 <div class="info-item">
                   <strong>Member since:</strong>

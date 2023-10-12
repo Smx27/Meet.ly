@@ -7,6 +7,7 @@ using API.Controllers.DTO;
 using API.Data;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,16 +17,18 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Constructor to Init Datacontext and Token services
         /// </summary>
         /// <param name="context"></param>
         /// <param name="tokenService"></param>
-        public AccountsController(DataContext context,ITokenService tokenService)
+        public AccountsController(DataContext context,ITokenService tokenService, IMapper mapper)
         {
             _tokenService = tokenService;
-            _context=context;
+            _mapper = mapper;
+            _context =context;
         }   
         
         
@@ -48,6 +51,8 @@ namespace API.Controllers
             and a `UserDTO` object with the username and a JWT token is returned. */
             if (await UserExist(userDTO.Username)) 
                 return BadRequest("Username taken");
+
+            var user = _mapper.Map<AppUser> (userDTO);
             
             //Creating A salted Hash To generate Encoded Password
             /* This code block is part of the `Register` method in the `AccountsController` class. It
@@ -58,11 +63,11 @@ namespace API.Controllers
             of the `AppUser` object. The `PasswordSalt` property of the `AppUser` object is set to
             the `Key` property of the `HMACSHA512` object, which is the randomly generated salt. */
             using var hmac =new HMACSHA512();
-            var user= new AppUser{
-                UserName=userDTO.Username,
-                PasswordHash=hmac.ComputeHash(Encoding.UTF8.GetBytes(userDTO.Password)),
-                PasswordSalt=hmac.Key
-            };
+            
+            user.UserName = userDTO.Username;
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userDTO.Password));
+            user.PasswordSalt = hmac.Key;
+            
 
             //If all dont then adding user in DB
            /* This code block is part of the `Register` method in the `AccountsController` class. It
@@ -72,13 +77,17 @@ namespace API.Controllers
            using `_context.Users.Add(user)` and saved using `await _context.SaveChangesAsync()`.
            Finally, a `UserDTO` object with the username and a JWT token is returned using `return
            new UserDTO{ Username=user.UserName, Token= _tokenService.CreateToken(user) }`. */
-            _context.Users.Add(user);
+             _context.Users.Add(user);
+
             await _context.SaveChangesAsync();
 
             //Returning the newly created user details 
-            return new UserDTO{
-                Username=user.UserName,
-                Token= _tokenService.CreateToken(user)
+             return new UserDTO
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user),
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
 
@@ -90,7 +99,9 @@ namespace API.Controllers
         /// <returns>User Data</returns>
         public async Task<ActionResult<UserDTO>> Login(LoginDTO userDTO){
             //fetching the user
-            var user = await _context.Users.SingleOrDefaultAsync(u=> u.UserName==userDTO.Username);
+            var user = await _context.Users
+            .Include(p=> p.Photos)
+            .SingleOrDefaultAsync(u=> u.UserName==userDTO.Username);
 
             //if no User Found Then Sending NULL/Unauth Error
             if(user==null) return Unauthorized();
@@ -106,7 +117,10 @@ namespace API.Controllers
             //returning user If its a valid user 
             return new UserDTO{
                 Username=user.UserName,
-                Token= _tokenService.CreateToken(user)
+                Token= _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(p=> p.IsMain)?.Url,
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
 

@@ -4,6 +4,7 @@ import { Observable, VirtualTimeScheduler, of } from 'rxjs';
 import { User } from '../_models/user';
 import { Route, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -60,6 +61,7 @@ export class NavComponent implements OnInit {
    */
   logout(){
     this.accountServices.logout();
+    this.router.navigateByUrl('/');
   }
 
 }

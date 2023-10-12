@@ -1,14 +1,17 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import { Observable, map, of } from 'rxjs';
+import { PaginationResult } from '../_models/pagination';
+import { UserParams } from '../_models/userParams';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
   members:Member[] = [];
+  memberCache = new Map();
 
   baseUrl= environment.apiUrl;
 
@@ -21,14 +24,53 @@ export class MembersService {
    * endpoint, with the `getHttpOptions()` as the options for the request. The response from the
    * request is expected to be an array of `Member` objects.
    */
-  getMembers(): Observable<Member[]>{
-    if(this.members.length > 0) return of(this.members);
-    return this.http.get<Member[]>(this.baseUrl + 'users/').pipe(
-      map(members=> {
-        this.members=members;
-        return members;
+  getMembers(userParams: UserParams){
+    const key = Object.values(userParams).join('-');
+
+    const response = this.memberCache.get(key);
+    
+    if (response) return of(response);
+
+    let params = this.getPaginationHeaders(userParams);
+
+    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users',params).pipe(
+      map(response =>{
+        this.memberCache.set(key,response);
+        return response;
       })
     )
+  }
+
+  private getPaginatedResults<T>(url: string,params: HttpParams) {
+    const paginatedResults: PaginationResult<T> = new PaginationResult<T>;
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
+      map(response => {
+        if (response.body) {
+          paginatedResults.result = response.body;
+        }
+
+        const pagination = response.headers.get('Pagination');
+
+        if (pagination) {
+          paginatedResults.pagination = JSON.parse(pagination);
+        }
+
+        return paginatedResults;
+      })
+    );
+  }
+
+  private getPaginationHeaders(userParams: UserParams) {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', userParams.pageNumber);
+    params = params.append('pageSize', userParams.pageSize);
+    params = params.append('minAge', userParams.minAge);
+    params = params.append('maxAge', userParams.maxAge);
+    params = params.append('gender', userParams.gender);
+    params = params.append('orderBy', userParams.orderBy);
+
+    return params;
   }
 
   /**
@@ -38,10 +80,14 @@ export class MembersService {
    * expected to be of type `Member`.
    */
   getMember(username: string){
-    if(this.members.length>0) {
-      const member = this.members.find(m=> m.userName===username);
-      return of(member);
-    }
+    
+    /* This code is retrieving a member from the `memberCache` map based on their username. */
+    const member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.result),[])
+      .find((member: Member) => member.userName == username)
+    
+      if(member) return of(member);
+
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
@@ -53,6 +99,13 @@ export class MembersService {
         this.members[index] = {...this.members,...member};
       })
     )
+  }
+  deletePhoto(photoId: number){
+    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId,{});
+  }
+
+  setMainPhoto(photoId: number){
+    return this.http.put(this.baseUrl + 'users/add-main-photo/' + photoId,{});
   }
   //removed this function because jwt.interceptor.ts is now handling the token
   /**

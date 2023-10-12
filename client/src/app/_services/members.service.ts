@@ -11,6 +11,7 @@ import { UserParams } from '../_models/userParams';
 })
 export class MembersService {
   members:Member[] = [];
+  memberCache = new Map();
 
   baseUrl= environment.apiUrl;
 
@@ -24,10 +25,20 @@ export class MembersService {
    * request is expected to be an array of `Member` objects.
    */
   getMembers(userParams: UserParams){
+    const key = Object.values(userParams).join('-');
+
+    const response = this.memberCache.get(key);
+    
+    if (response) return of(response);
+
     let params = this.getPaginationHeaders(userParams);
 
-    // if(this.members.length > 0) return of(this.members);
-    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users',params)
+    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users',params).pipe(
+      map(response =>{
+        this.memberCache.set(key,response);
+        return response;
+      })
+    )
   }
 
   private getPaginatedResults<T>(url: string,params: HttpParams) {

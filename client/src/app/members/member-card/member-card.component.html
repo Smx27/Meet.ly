@@ -27,7 +27,7 @@
                       <button type="button" name="btnUser" routerLink="/members/{{member.userName}}" title="Go to profile">
                           <i style="--i:1" class="fa fa-user"></i>
                       </button>
-                        <button title="Like">
+                        <button title="Like" (click)="addLike(member)">
 
                             <i style="--i:2" class="fa fa-heart"></i>
                         </button>

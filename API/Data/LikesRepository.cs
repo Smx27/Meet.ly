@@ -41,7 +41,7 @@ namespace API.Data
                 Age = u.DateOfBirth.CalculateAge(),
                 City = u.City,
                 Id = u.Id,
-                PhotooUrl = u.Photos.FirstOrDefault(p=> p.IsMain).Url
+                PhotoUrl = u.Photos.FirstOrDefault(p=> p.IsMain).Url
             }).ToListAsync();
         }
 

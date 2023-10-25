@@ -69,6 +69,18 @@ export class MembersService {
     )
   }
 
+  addLike(username:string){
+    return this.http.post(this.baseUrl+'likes/'+username,{});
+  }
+
+  getLikes(predicates:string, pageNumber:number, pageSize:number){
+    let params = new HttpParams();
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+    params = params.append('predicates' ,predicates);
+    return this.getPaginatedResults<Member[]>(this.baseUrl + 'likes', params);
+  }
+  
   private getPaginatedResults<T>(url: string,params: HttpParams) {
     const paginatedResults: PaginationResult<T> = new PaginationResult<T>;
     return this.http.get<T>(url, { observe: 'response', params }).pipe(
@@ -82,7 +94,7 @@ export class MembersService {
         if (pagination) {
           paginatedResults.pagination = JSON.parse(pagination);
         }
-
+        console.log(paginatedResults.pagination)
         return paginatedResults;
       })
     );

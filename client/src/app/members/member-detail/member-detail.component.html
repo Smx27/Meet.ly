@@ -1,4 +1,4 @@
-<div class="row" x-data="{ rightSide: false, leftSide: false }" *ngIf="member">
+<div class="row" x-data="{ rightSide: false, leftSide: false }" >
     <div class="main custombody col-12">
       <div class="main-container">
         <div class="profile">
@@ -62,20 +62,21 @@
           </div>
           <div class="timeline-right">
            <tabset class="right-view hide-headings" #tabSet >
-            <tab heading="Timeline" ngClass="{'hide-heading': true}">
+            <tab heading="Timeline" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
               Timeline will be implimented soon
             </tab>
-            <tab heading="About" ngClass="{'hide-heading': true}">
+            <tab heading="About" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
               {{member.introduction}}
             </tab>
-            <tab heading="Interests" ngClass="{'hide-heading': true}">
+            <tab heading="Interests" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
               {{member.interests}}
             </tab>
-            <tab heading="Photos" ngClass="{'hide-heading': true}">
+            <tab heading="Photos" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
               <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
             </tab>
-            <tab heading="Message" ngClass="{'hide-heading': true}">
-              Message not yet implimented</tab>
+            <tab heading="Messages" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
+              <app-member-messages [messages]="messages" [username]="member.userName"></app-member-messages>
+            </tab>
            </tabset>
           </div>
         </div>

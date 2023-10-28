@@ -1,0 +1,70 @@
+<div class="message_wrapper">
+    <section class="msger">
+        <header class="msger-header">
+            <div class="msger-header-title">
+                <i class="fa fa-comment-alt"></i> Meet.ly Chat
+            </div>
+            <div class="msger-header-options">
+                <span><i class="fa fa-cog"></i></span>
+            </div>
+        </header>
+
+        <main class="msger-chat">
+            <div *ngIf="messages.length === 0">
+                No content..
+            </div>
+            <div class="message-container" *ngFor="let message of messages">
+                <div class="msg left-msg" *ngIf="message.senderUsername === username">
+                    <div class="msg-img" style="background-image: url({{message.senderPhotoUrl}})"></div>
+
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">{{message.senderUsername}}</div>
+                            <div class="msg-info-time">{{message.dateRead || message.messageSent | timeago}}</div>
+                        </div>
+
+                        <div class="msg-text">
+                            {{message.content}}
+                            <img src="{{message.dateRead 
+                                ?'./assets/double_check.svg'
+                                :'./assets/check.svg'}}" alt="check">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="msg right-msg" *ngIf="message.senderUsername !== username">
+                    <div class="msg-img" style="background-image: url({{message.senderPhotoUrl}})"></div>
+
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">{{message.senderUsername}}</div>
+                            <div class="msg-info-time">{{message.dateRead || message.messageSent | timeago}}</div>
+                        </div>
+
+                        <div class="msg-text">
+                            {{message.content}}
+                            <img src="{{message.dateRead 
+                                ?'./assets/double_check.svg'
+                                :'./assets/check.svg'}}" alt="check">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <form class="msger-inputarea" #messageForm="ngForm" autocomplete="off" (ngSubmit)="sendMessage()">
+            <input 
+            type="text" 
+            class="msger-input" 
+            [(ngModel)]="messageContent"
+            placeholder="Enter your message..."
+            name="messageContent"
+            required
+            >
+            <button 
+            type="submit"
+            class="msger-send-btn"
+            [disabled]="!messageForm.valid"
+            >Send</button>
+        </form>
+    </section>
+</div>

@@ -11,6 +11,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditDeactivateGuard } from './_gurds/member-edit-deactivate.guard';
+import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 //Routes has to be object of routs with path for paremeters use :
 /* This code is defining the routes for an Angular application using the `Routes` interface from the
@@ -23,7 +24,7 @@ const routes: Routes = [
   canActivate:[AuthGuard],
   children:[
     {path:'members',component:MemberListComponent},
-    {path:'members/:username',component:MemberDetailComponent},
+    {path:'members/:username',component:MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
     {path:'member/edit',component:MemberEditComponent,canDeactivate:[MemberEditDeactivateGuard]},
     {path:'lists',component:ListsComponent},
     {path:'messages',component:MessagesComponent}

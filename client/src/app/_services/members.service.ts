@@ -7,6 +7,7 @@ import { PaginationResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { User } from '../_models/user';
+import { getPaginatedResults, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -59,9 +60,9 @@ export class MembersService {
     
     if (response) return of(response);
 
-    let params = this.getPaginationHeaders(userParams);
+    let params = getPaginationHeaders(userParams);
 
-    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users',params).pipe(
+    return getPaginatedResults<Member[]>(this.baseUrl + 'users',params, this.http).pipe(
       map(response =>{
         this.memberCache.set(key,response);
         return response;
@@ -78,41 +79,10 @@ export class MembersService {
     params = params.append('pageNumber', pageNumber);
     params = params.append('pageSize', pageSize);
     params = params.append('predicates' ,predicates);
-    return this.getPaginatedResults<Member[]>(this.baseUrl + 'likes', params);
+    return getPaginatedResults<Member[]>(this.baseUrl + 'likes', params,this.http);
   }
   
-  private getPaginatedResults<T>(url: string,params: HttpParams) {
-    const paginatedResults: PaginationResult<T> = new PaginationResult<T>;
-    return this.http.get<T>(url, { observe: 'response', params }).pipe(
-      map(response => {
-        if (response.body) {
-          paginatedResults.result = response.body;
-        }
-
-        const pagination = response.headers.get('Pagination');
-
-        if (pagination) {
-          paginatedResults.pagination = JSON.parse(pagination);
-        }
-        console.log(paginatedResults.pagination)
-        return paginatedResults;
-      })
-    );
-  }
-
-  private getPaginationHeaders(userParams: UserParams) {
-    let params = new HttpParams();
-
-    params = params.append('pageNumber', userParams.pageNumber);
-    params = params.append('pageSize', userParams.pageSize);
-    params = params.append('minAge', userParams.minAge);
-    params = params.append('maxAge', userParams.maxAge);
-    params = params.append('gender', userParams.gender);
-    params = params.append('orderBy', userParams.orderBy);
-
-    return params;
-  }
-
+  
   /**
    * The function `getMember` retrieves a member's information from a server using an HTTP GET request.
    * @param {string} username - A string representing the username of the member you want to retrieve.

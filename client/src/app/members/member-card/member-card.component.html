@@ -31,8 +31,10 @@
 
                             <i style="--i:2" class="fa fa-heart"></i>
                         </button>
-                        <button title="Message">
-
+                        <button 
+                        routerLink="/members/{{member.userName}}"
+                        [queryParams]="{tab: 4}"
+                        title="Message">
                             <i style="--i:3" class="fa fa-envelope"></i>
                         </button>
                     </span>

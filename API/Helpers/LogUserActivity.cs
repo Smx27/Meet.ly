@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using API.Extensions;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;

@@ -5,16 +5,16 @@
 
         <h2 style="margin-left:5rem">People Near You</h2>
         <div class="row " style="margin-left:15rem ;margin-right:15rem" >
-          <div *ngFor="let d of listView" class="col-lg-3 mt-3 mb-3">
+          <div *ngFor="let d of members" class="col-lg-3 mt-3 mb-3">
             <div  class="card mb-3"id="newscard"style="height: 450px; overflow: hidden;background-color:#f8f9fa;">
-              <a href="{{ d.url }}" target="_blank" style="text-decoration: none;color:rgb(74, 74, 74)">
-                <img src="{{ d.urlToImage }}"class="card-img-top"style="height: 250px"alt="..."/>
+              <a href="{{ d.photoUrl }}" target="_blank" style="text-decoration: none;color:rgb(74, 74, 74)">
+                <img src="{{ d.photoUrl }}"class="card-img-top"style="height: 250px"alt="..."/>
               </a>
                   <div class="card-body">
-                          <h6>{{ d.Name }}</h6>
-                          <h6>{{ d.Age }}</h6>
+                          <h6>{{ d.knownAs }}</h6>
+                          <h6>{{ d.age }}</h6>
                           <!-- <p>{{ d.description }}</p> -->
-                          <a href="{{ d.url }}" target="_blank" class="btn btn-danger mt-3">Read More</a>
+                          <a href="{{ d.photoUrl }}" target="_blank" class="btn btn-danger mt-3">Read More</a>
                   </div>
             </div>
           </div>

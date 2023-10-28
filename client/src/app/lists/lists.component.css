@@ -1,0 +1,31 @@
+/* .user-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.user-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.user-card img {
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.user-card h3 {
+    margin-top: 10px;
+}
+
+.user-card p {
+    color: #777;
+} */
+.box{
+    padding: 10px 10px;
+}

@@ -16,16 +16,42 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const user = pm.response.json();",
+									"var res = JSON.parse(responseBody);",
 									"",
-									"pm.test(\"Has properties\", function () {",
-									"    pm.expect(user).to.have.property('username');",
-									"    pm.expect(user).to.have.property('token');",
+									"pm.environment.set('token', res.token);",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
 									"});",
 									"",
-									"if (pm.test(\"Has properties\")) {",
-									"    pm.globals.set('token', user.token);",
-									"}"
+									"",
+									"pm.test(\"The username field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that the 'token' field is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Photo URL field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.photoUrl).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"The knownAs field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.knownAs).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -49,6 +75,56 @@
 				},
 				{
 					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.username).to.exist.and.to.be.a('string');",
+									"    pm.expect(responseData.token).to.exist.and.to.be.a('string');",
+									"    pm.expect(responseData.photoUrl).to.exist;",
+									"    pm.expect(responseData.knownAs).to.exist.and.to.be.a('string');",
+									"    pm.expect(responseData.gender).to.exist.and.to.be.a('string');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Username is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.username).to.be.a('string');",
+									"    pm.expect(responseData.username).to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Token is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.token).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"PhotoUrl is either null or a valid URL\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.photoUrl).to.satisfy(function (url) {",
+									"    return url === null || (typeof url === 'string' && url.match(/^https?:\\/\\/\\w+(\\.\\w+)+(:\\d+)?(\\/\\S*)?$/));",
+									"  }, \"PhotoUrl should be either null or a valid URL\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -70,6 +146,81 @@
 						"url": "{{url}}/api/accounts/register"
 					},
 					"response": []
+				},
+				{
+					"name": "Login with other user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set('token2', res.token);",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.username).to.exist;",
+									"    pm.expect(responseData.token).to.exist;",
+									"    pm.expect(responseData.photoUrl).to.exist;",
+									"    pm.expect(responseData.knownAs).to.exist;",
+									"    pm.expect(responseData.gender).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.token).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"PhotoUrl is null or a valid URL\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.photoUrl).to.satisfy(function (url) {",
+									"    return url === null || typeof url === 'string' && url.match(/^http(s)?:\\/\\/\\S+$/);",
+									"  }, \"Value should be null or a valid URL\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Gender is either empty or a valid gender value\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.gender).to.satisfy(function (gender) {",
+									"        return gender === \"\" || [\"male\", \"female\"].includes(gender);",
+									"    }, \"Gender should be either empty or a valid gender value\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"bob\",\n\t\"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/accounts/login"
+					},
+					"response": []
 				}
 			],
 			"description": "For authetication"
@@ -79,6 +230,48 @@
 			"item": [
 				{
 					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'photos' array is present and not empty in each object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function (user) {",
+									"        pm.expect(user.photos).to.exist.and.to.be.an('array').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate userName is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"userName should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -94,6 +287,50 @@
 				},
 				{
 					"name": "GetUserByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate 'id' field is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.exist.and.to.be.a('number').and.to.be.at.least(0, \"Value should be a non-negative integer\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"The userName field should be a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'photos' array is present in the response\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.photos).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"The 'photos' array should be empty\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.photos).to.be.an('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -133,6 +370,42 @@
 				},
 				{
 					"name": "GetUserByUsername",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'userName' field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.userName).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'age' field is a non-negative integer\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.age).to.exist.and.to.be.a('number').and.to.satisfy(age => age >= 0, \"Age should be a non-negative integer\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'photos' array is present in the response and contains at least one element\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.photos).to.exist.and.to.be.an('array').that.is.not.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -207,6 +480,58 @@
 				},
 				{
 					"name": "GetUserWithGender",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array with at least one element\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that all fields are present in the response\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  ",
+									"  responseData.forEach(function(user) {",
+									"    pm.expect(user).to.include.all.keys(",
+									"      'id',",
+									"      'userName',",
+									"      'photoUrl',",
+									"      'age',",
+									"      'knownAs',",
+									"      'created',",
+									"      'lastActive',",
+									"      'gender',",
+									"      'introduction',",
+									"      'lookingFor',",
+									"      'interests',",
+									"      'city',",
+									"      'country'",
+									"    );",
+									"  });",
+									"});",
+									"",
+									"pm.test(\"The 'photos' array is present and contains at least one element\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  pm.expect(responseData.length).to.be.at.least(1, \"'photos' array should contain at least one element\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -237,6 +562,48 @@
 				},
 				{
 					"name": "GetuserWithMinAge",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'id' is a non-negative integer\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  ",
+									"  responseData.forEach(function(user) {",
+									"    pm.expect(user.id).to.be.a('number').and.to.be.at.least(0);",
+									"  });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the userName is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -280,6 +647,42 @@
 				},
 				{
 					"name": "GetuserWiithMaxAge",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Age is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.age).to.be.a('number');",
+									"        pm.expect(user.age).to.be.at.least(0, \"Age should be non-negative\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that userName is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"userName should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -320,12 +723,779 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get User in 30s",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"  pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Age of each user is between 30 and 39\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').and.to.have.length.above(0);",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.age).to.be.a('number').and.to.be.within(30, 39);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'photos' array is present in each user object and is not empty\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user).to.have.property('photos').that.is.an('array').that.is.not.empty;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?minAge=30&maxAge=39",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "minAge",
+									"value": "30"
+								},
+								{
+									"key": "maxAge",
+									"value": "39"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User order by created",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that the 'userName' field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(user){",
+									"        pm.expect(user.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Age field is a non-negative integer\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  ",
+									"  responseData.forEach(function(user) {",
+									"    pm.expect(user.age).to.be.a('number').and.to.be.at.least(0, \"Age should be a non-negative integer\");",
+									"  });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?orderBy=created&gender=female",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "created"
+								},
+								{
+									"key": "gender",
+									"value": "female"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user order by last active",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response is an array with at least one element\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'photos' array is present and contains at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.photos).to.exist.and.to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that the 'url' field in each photo object is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.photos).to.be.an('array');",
+									"        ",
+									"        user.photos.forEach(function(photo) {",
+									"            pm.expect(photo.url).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"        });",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?orderBy=lastActive&gender=female",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "lastActive"
+								},
+								{
+									"key": "gender",
+									"value": "female"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "Error Handling",
-			"item": []
+			"item": [
+				{
+					"name": "Get Null Ref Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/api/buggy/server-error"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Auth Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/api/buggy/auth"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Not Found error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/api/buggy/not-found"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bad Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/api/buggy/bad-request"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Validation Error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/account/register"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "Create Message from marlin to bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"SenderPhotoUrl is either null or a valid URL\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.senderPhotoUrl).to.satisfy(function (url) {",
+									"    return url === null || typeof url === 'string' && /^https?:\\/\\/\\S+$/.test(url);",
+									"  }, \"SenderPhotoUrl should be either null or a valid URL\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.content).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"recipientUsername\": \"bob\",\n    \"content\": \"Test message 3 from marilyn to bob\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/messages"
+					},
+					"response": []
+				},
+				{
+					"name": "Create message from bob to marilyn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"The id field is a non-negative integer\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.id).to.be.a('number');",
+									"  pm.expect(responseData.id).to.be.at.least(0, \"Id should be a non-negative integer\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate senderId and recipientId fields are non-negative integers\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.senderId).to.be.a('number').and.to.be.at.least(0, \"senderId should be a non-negative integer\");",
+									"    pm.expect(responseData.recipientId).to.be.a('number').and.to.be.at.least(0, \"recipientId should be a non-negative integer\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate senderUsername and recipientUsername fields are non-empty strings\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.senderUsername).to.be.a('string').and.to.have.lengthOf.at.least(1, \"senderUsername should not be empty\");",
+									"    pm.expect(responseData.recipientUsername).to.be.a('string').and.to.have.lengthOf.at.least(1, \"recipientUsername should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"The content field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token2}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"recipientUsername\": \"marilyn\",\n    \"content\": \"Test message 4 from bob to marilyn\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/messages"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Messages from Marlyn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array with at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that 'senderId' and 'recipientId' fields are non-negative integers\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.senderId).to.be.a('number').and.to.be.at.least(0);",
+									"        pm.expect(message.recipientId).to.be.a('number').and.to.be.at.least(0);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify senderUsername and recipientUsername fields are non-empty strings\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.senderUsername).to.be.a('string').and.to.have.lengthOf.at.least(1, \"senderUsername field should not be empty\");",
+									"        pm.expect(message.recipientUsername).to.be.a('string').and.to.have.lengthOf.at.least(1, \"recipientUsername field should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{url}}/api/messages"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Default message for bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array with at least one element\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  pm.expect(responseData).to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that senderUsername and recipientUsername are non-empty strings\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.senderUsername).to.be.a('string').and.to.have.lengthOf.at.least(1, \"senderUsername should not be empty\");",
+									"        pm.expect(message.recipientUsername).to.be.a('string').and.to.have.lengthOf.at.least(1, \"recipientUsername should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Validate that the content field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(message) {",
+									"        pm.expect(message.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token2}}",
+								"type": "text"
+							}
+						],
+						"url": "{{url}}/api/messages"
+					},
+					"response": []
+				},
+				{
+					"name": "Get outbox from marilyn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response is an array\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"The array contains at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Array should contain at least one element\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify senderId and recipientId are non-zero integers\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"    ",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.senderId).to.be.a('number').that.is.above(0);",
+									"        pm.expect(message.recipientId).to.be.a('number').that.is.above(0);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/messages?containner=Outbox",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "containner",
+									"value": "Outbox"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get outbox for bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response array is not empty\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  pm.expect(responseData).to.have.lengthOf.at.least(1, \"Array should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify senderId and recipientId fields are non-zero integers\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.senderId).to.be.a('number').and.to.not.equal(0);",
+									"        pm.expect(message.recipientId).to.be.a('number').and.to.not.equal(0);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/messages?containner=Outbox",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "containner",
+									"value": "Outbox"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Message thread for Marilyn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  pm.expect(responseData).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/api/messages/thread/bob"
+					},
+					"response": []
+				},
+				{
+					"name": "Message thread for bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'id' field is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.id).to.exist.and.be.a('number');",
+									"        pm.expect(message.id).to.be.at.least(0);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that senderUsername and recipientUsername fields are non-empty strings\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"  ",
+									"  responseData.forEach(function(message) {",
+									"    pm.expect(message.senderUsername).to.be.a('string').and.to.not.be.empty;",
+									"    pm.expect(message.recipientUsername).to.be.a('string').and.to.not.be.empty;",
+									"  });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'content' field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"    ",
+									"    responseData.forEach(function (message) {",
+									"        pm.expect(message.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token2}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/api/messages/thread/marilyn"
+					},
+					"response": []
+				}
+			],
+			"description": "send receive message"
 		}
 	]
 }

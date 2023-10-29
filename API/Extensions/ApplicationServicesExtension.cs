@@ -45,6 +45,10 @@ namespace API.Extensions
                 builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
             }));
             
+            services.AddHttpsRedirection(options =>
+                {
+                    options.HttpsPort = 5001;
+                });
 
             //Added JWT
             services.AddScoped<ITokenService,TokenService>();

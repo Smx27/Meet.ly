@@ -1,5 +1,7 @@
+using API.Entities;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 /* This code is setting up and configuring a web application in C#. */
@@ -36,8 +38,10 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<API.Data.DataContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
-    await API.Data.Seed.SeedUsers(context);
+    await API.Data.Seed.SeedUsers(userManager,roleManager);
 }
 catch(Exception ex)
 {

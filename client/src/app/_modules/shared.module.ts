@@ -10,6 +10,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from "ngx-timeago";
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 /* This is a module definition in Angular. It imports and configures two external modules:
 `BsDropdownModule` from `ngx-bootstrap/dropdown` and `ToastrModule` from `ngx-toastr`. It also
@@ -33,7 +34,8 @@ are no components, directives, or pipes declared in this module. The `exports` a
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports:[
     BsDropdownModule,
@@ -45,7 +47,8 @@ are no components, directives, or pipes declared in this module. The `exports` a
     BsDatepickerModule,
     PaginationModule,
     ButtonsModule,
-    TimeagoModule
+    TimeagoModule,
+    ModalModule
   ]
 })
 export class SharedModule { }

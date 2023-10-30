@@ -88,6 +88,9 @@ allows the user to stay logged in even if they refresh the page or close the bro
    * current user using the currentuserSource.next
    */
   setCurrentUser(user: User) {
+    user.roles  = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentuserSource.next(user);
   }
@@ -106,4 +109,7 @@ allows the user to stay logged in even if they refresh the page or close the bro
     return this.http.get(this.UserListsUrl);
   }
 
+  getDecodedToken(token:string){
+    return JSON.parse(atob(token.split('.')[1]));
+  }
 }

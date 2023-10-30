@@ -1,0 +1,10 @@
+{
+    "Endpoints": {
+        "Https": {
+          "Url": "https://localhost:5001",
+          "Certificate": {
+            "Path": "~/client/ssl/server.crt"
+          }
+        }
+    }    
+}

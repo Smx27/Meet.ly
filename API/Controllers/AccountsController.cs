@@ -86,7 +86,6 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        [AllowAnonymous]
         /// <summary>
         /// Api endpoint to Login a user
         /// </summary>

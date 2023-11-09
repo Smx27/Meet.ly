@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "ng-swipe": "^2.0.1"
+    "ng-swipe": "^2.0.1",
+    "react-router-dom": "^6.18.0"
   }
 }

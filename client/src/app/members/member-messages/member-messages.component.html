@@ -10,10 +10,10 @@
         </header>
 
         <main class="msger-chat">
-            <div *ngIf="messages.length === 0">
+            <div *ngIf="(messageService.messageThread$ | async)?.length === 0">
                 No content..
             </div>
-            <div class="message-container" *ngFor="let message of messages">
+            <div class="message-container" *ngFor="let message of (messageService.messageThread$ | async)">
                 <div class="msg left-msg" *ngIf="message.senderUsername === username">
                     <div class="msg-img" style="background-image: url({{message.senderPhotoUrl}})"></div>
 

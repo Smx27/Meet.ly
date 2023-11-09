@@ -25,7 +25,7 @@
                     <!-- <p>Graphic Designer</p> -->
                     <span>
                       <button type="button" name="btnUser" routerLink="/members/{{member.userName}}" title="Go to profile">
-                          <i style="--i:1" class="fa fa-user"></i>
+                         <i [class.is_online]="(presenceService.onlineUsers$ | async) ?.includes(member.userName)" style="--i:1" class="fa fa-user"></i>
                       </button>
                         <button title="Like" (click)="addLike(member)">
 

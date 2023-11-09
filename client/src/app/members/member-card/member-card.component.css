@@ -162,3 +162,7 @@ span{
 .tw:hover{color:#32CBFE}
 .ins:hover{color:#DB2E69}
 .lin:hover{color:#026BC1}
+
+.is_online{
+	color: rgb(99, 174, 86);
+}

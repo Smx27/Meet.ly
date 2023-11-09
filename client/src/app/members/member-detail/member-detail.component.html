@@ -75,7 +75,7 @@
               <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
             </tab>
             <tab heading="Messages" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
-              <app-member-messages [messages]="messages" [username]="member.userName"></app-member-messages>
+              <app-member-messages [username]="member.userName"></app-member-messages>
             </tab>
            </tabset>
           </div>

@@ -49,6 +49,7 @@ export class NavComponent implements OnInit {
    */
   login()
   {
+    console.log(this.model)
     this.accountServices.login(this.model).subscribe({
       next: ()=>this.router.navigateByUrl('/members')
       //error: error=> this.toster.error(error.error)  this is handeled in interceptor

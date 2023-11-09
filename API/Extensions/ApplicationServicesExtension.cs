@@ -2,6 +2,7 @@ using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -41,9 +42,19 @@ namespace API.Extensions
             });
 
             //ADDED Cors Policy Created A New Policy NAME CORS and Call in APP context  
-            services.AddCors(o=>o.AddPolicy(name: "CORS",builder=>{
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-            }));
+            // services.AddCors(o=> o.AddPolicy(name: "CORS",builder=>{
+            //     builder.AllowAnyHeader()
+            //     .AllowAnyMethod()
+            //     .AllowCredentials()
+            //     .AllowAnyOrigin();
+            // }));
+            // services.AddCors(o=> o.AddPolicy(name: "CORS",builder=>{
+            //     builder.AllowAnyHeader()
+            //     .AllowAnyMethod()
+            //     .AllowCredentials()
+            //     .WithOrigins("https://localhost:4200");
+            // }));
+            // services.AddCors()
             
             services.AddHttpsRedirection(options =>
                 {
@@ -65,6 +76,10 @@ namespace API.Extensions
             services.AddScoped<ILikeRepository,LikesRepository>();
             services.AddScoped<IMessageRepository,MessageRepository>();
             services.AddScoped<LogUserActivity>();
+            //Adding SignalR
+            services.AddSignalR();
+            //Adding PresenceTracker
+            services.AddSingleton<PresenceTracker>();
             
             //Returning all the services to extend this and calling in program.cs
             return services;

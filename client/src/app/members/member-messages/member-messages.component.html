@@ -9,7 +9,7 @@
             </div>
         </header>
 
-        <main class="msger-chat">
+        <main class="msger-chat" #chatScroll [scrollTop]="chatScroll.scrollHeight">
             <div *ngIf="(messageService.messageThread$ | async)?.length === 0">
                 No content..
             </div>

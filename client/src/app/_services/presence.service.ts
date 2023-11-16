@@ -27,11 +27,15 @@ export class PresenceService {
       this.hubConnection.start().catch(error => console.error(error));
 
       this.hubConnection.on('UserIsOnline', username =>{
-        this.toster.info(username + ' Is online')
+        this.onlineUsers$.pipe(take(1)).subscribe({
+          next: usernames=> this.onlineUserSource.next([...usernames,username])
+        })
       })
 
       this.hubConnection.on('UserIsOffline', username =>{
-        this.toster.warning(username + ' Is offline')
+        this.onlineUsers$.pipe(take(1)).subscribe({
+          next: usernames=> this.onlineUserSource.next(usernames.filter(x=> x !== username))
+        })
       })
 
       this.hubConnection.on('GetOnlineUsers', usernames => {

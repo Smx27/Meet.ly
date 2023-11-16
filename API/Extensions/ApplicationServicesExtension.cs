@@ -65,7 +65,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService,TokenService>();
 
             //Adding User Repository
-            services.AddScoped<IUserRepository,UserRepository>();
+            // services.AddScoped<IUserRepository,UserRepository>();
 
             //adding automapper service into the application
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -73,8 +73,10 @@ namespace API.Extensions
             //Adding Photo Service
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService,PhotoService>();
-            services.AddScoped<ILikeRepository,LikesRepository>();
-            services.AddScoped<IMessageRepository,MessageRepository>();
+            // services.AddScoped<ILikeRepository,LikesRepository>();
+            // services.AddScoped<IMessageRepository,MessageRepository>();
+            //Adding Unit of work
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<LogUserActivity>();
             //Adding SignalR
             services.AddSignalR();

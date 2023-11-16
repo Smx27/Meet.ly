@@ -106,10 +106,12 @@ namespace API.Data
             database using `_context.SaveChangesAsync()`. This ensures that the `DateRead` property
             is updated for all unread messages in the database. */
             if(unreadMessages.Any()){
-                foreach(var message in unreadMessages){
+                foreach(var message in unreadMessages)
+                {
                     message.DateRead = DateTime.Now;
                 }
-                await _context.SaveChangesAsync();
+                //handle with Unit of work
+                // await _context.SaveChangesAsync();
             }
 
             return _mapper.Map<IEnumerable<MessageDto>>(messages);
@@ -118,11 +120,6 @@ namespace API.Data
         public void RemoveConnection(Connection connection)
         {
             _context.Connections.Remove(connection);
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

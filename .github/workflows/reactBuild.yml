@@ -25,7 +25,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+      - name: Build Vite 
+        run: vite build
       - name: Build the React application
         run: npm run build --if-present
 

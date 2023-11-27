@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../_models/user';
 import { registerUser } from '../_models/registerUser';
 import { environment } from 'src/environments/environment';
+import { PresenceService } from './presence.service';
 
 //this is use to send HTTPS requests
 
@@ -42,7 +43,7 @@ This helps to avoid errors that can occur when trying to access properties of a 
    * Angular's dependency injection system.
    */
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private presenceService: PresenceService) { }
 
   /* This code is defining a method called `login` in the `AccountService` class. This method takes in a
 `model` parameter and sends a HTTPS POST request to the server to authenticate the user. If the
@@ -88,8 +89,13 @@ allows the user to stay logged in even if they refresh the page or close the bro
    * current user using the currentuserSource.next
    */
   setCurrentUser(user: User) {
+    user.roles  = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentuserSource.next(user);
+
+    this.presenceService.createHubConnection(user);
   }
 
   /**
@@ -98,6 +104,7 @@ allows the user to stay logged in even if they refresh the page or close the bro
   logout() {
     localStorage.removeItem('user');
     this.currentuserSource.next(null);
+    this.presenceService.stopHubconnection();
   }
 
 
@@ -106,4 +113,7 @@ allows the user to stay logged in even if they refresh the page or close the bro
     return this.http.get(this.UserListsUrl);
   }
 
+  getDecodedToken(token:string){
+    return JSON.parse(atob(token.split('.')[1]));
+  }
 }

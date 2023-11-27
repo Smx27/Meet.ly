@@ -1,0 +1,11 @@
+{
+    "Endpoints": {
+        "Https": {
+          "Url": "https://localhost:5001",
+          "Certificate": {
+            "Path": "/home/smx27/Documents/Github/DotNet/Meet.ly/API/ssl/local.pem",
+            "KeyPath":"/home/smx27/Documents/Github/DotNet/Meet.ly/API/ssl/local.key"
+          }
+        }
+    }    
+}

@@ -15,7 +15,8 @@ const Hero = () => {
     <h1 className="my-4 text-5xl font-bold leading-tight" style={{ fontFamily: "Dancing Script" }}>
     Helping You Find <br/> The Right Partner
     </h1>
-    <p class="max-w-2xl pt-8 mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+    <p className="max-w-2xl pt-8 mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+     {/* eslint-disable-next-line react/no-unescaped-entities */}
     Meet.ly is the only dating app that matches you on what matters to you.You deserve to find who you're looking for.Meet them today!
     </p>
     <button className="mx-auto lg:mx-0 hover: bg-[#ef0f33] text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
@@ -33,31 +34,31 @@ const Hero = () => {
 <section className="bg-[#fef4f5] pb-12 lg:pt-[120px] lg:pb-[90px]">
     <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 pl-10'>
      
-     <div class="max-w-sm p-6 flex flex-col items-center"> 
+     <div className="max-w-sm p-6 flex flex-col items-center"> 
      <div className='w-16 h-16 rounded-lg bg-[#ff8100] flex flex-col items-center pt-2'>
 <GiLovers class="w-10 h-10 text-white dark:text-white mb-3"/>
 </div>
-        <h5 class="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white  pt-6 ">M<span className='text-[#ff8100] '>ee</span>tings</h5>
-    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> Lorem Ipsum is not simply random text.
+        <h5 className="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white  pt-6 ">Da<span className='text-[#ff8100] '>tes</span></h5>
+    <p className="mb-3 font-normal text-gray-500 dark:text-gray-400"> Find Your Compatible Dates.
     </p>
 </div>
 
 
-<div class="max-w-sm p-6 flex flex-col items-center"> 
+<div className="max-w-sm p-6 flex flex-col items-center"> 
      <div className='w-16 h-16 rounded-lg bg-[#ed0f34] flex flex-col items-center pt-2'>
 <MdVideoChat class="w-10 h-10 text-white dark:text-white mb-3"/>
 </div>
-        <h5 class="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white  pt-6 ">Video <span className='text-[#ed0f34] '>Call</span></h5>
-    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> Lorem Ipsum is not simply random text.
+        <h5 className="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white  pt-6 ">Face <span className='text-[#ed0f34] '>Time</span></h5>
+    <p className="mb-3 font-normal text-gray-500 dark:text-gray-400"> Have one-one Conversation.
     </p>
 </div>
 
-<div class="max-w-sm p-6 flex flex-col items-center"> 
+<div className="max-w-sm p-6 flex flex-col items-center"> 
      <div className='w-16 h-16 rounded-lg bg-[#ffc536] flex flex-col items-center pt-2'>
 <AiFillWechat class="w-10 h-10 text-white dark:text-white mb-3"/>
 </div>
-        <h5 class="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white  pt-6 ">Ch<span className='text-[#ffc536] '>at</span></h5>
-    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> Lorem Ipsum is not simply random text.
+        <h5 className="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white  pt-6 ">Ch<span className='text-[#ffc536] '>at</span></h5>
+    <p className="mb-3 font-normal text-gray-500 dark:text-gray-400"> Make your first move with chat.
     </p>
 </div>
 
@@ -79,7 +80,7 @@ const Hero = () => {
     <h1 className="my-4 text-5xl font-bold leading-tight" >
     Featured couple 
     </h1>
-    <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+    <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
     Pellentesque a odio id nunc mollis dapibus non non orci. Nullam lacinia placerat facilisis. Vivamus rutrum, sapien vel consectetur euismod, leo augue tempus justo.
     </p>
     <button className="mx-auto lg:mx-0 hover: bg-[#ef0f33] text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">

@@ -18,6 +18,12 @@ namespace API.Data
             _context = context;
             
         }
+
+        public void AddGroup(Group group)
+        {
+            _context.Groups.Add(group);
+        }
+
         public void AddMessage(Message message)
         {
             _context.Messages.Add(message);
@@ -26,6 +32,19 @@ namespace API.Data
         public void DeleteMessage(Message message)
         {
             _context.Messages.Remove(message);
+        }
+
+        public async Task<Connection> GetConnection(string connectionId)
+        {
+            return await _context.Connections.FindAsync(connectionId);
+        }
+
+        public async Task<Group> GetGroupForConnection(string connectionId)
+        {
+            return await _context.Groups
+            .Include(x=> x.Connections)
+            .Where(x=> x.Connections.Any(c=> c.ConnectionId == connectionId))
+            .FirstOrDefaultAsync();
         }
 
         public async Task<Message> GetMessage(int Id)
@@ -40,9 +59,13 @@ namespace API.Data
             .AsQueryable();
 
             query = messageParams.Containner switch{
-                "Inbox" => query.Where(u=> u.RecipientUsername == messageParams.Username),
-                "Outbox" => query.Where(u=> u.SenderUsername == messageParams.Username),
-                _ => query.Where(u=> u.RecipientUsername == messageParams.Username && u.DateRead == null)
+                "Inbox" => query.Where(u=> u.RecipientUsername == messageParams.Username 
+                    && u.RecipientDeleted == false),
+                "Outbox" => query.Where(u=> u.SenderUsername == messageParams.Username 
+                    && u.SenderDeleted == false),
+                _ => query.Where(u=> u.RecipientUsername == messageParams.Username 
+                    && u.RecipientDeleted == false
+                    && u.DateRead == null )
             };
 
             var messages = query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider);
@@ -51,22 +74,27 @@ namespace API.Data
             .CreateAsync(messages, messageParams.PageNumber, messageParams.PageSize);
         }
 
+        public async Task<Group> GetMessageGroup(string groupName)
+        {
+            return await _context.Groups.Include(x=> x.Connections).FirstOrDefaultAsync(x=> x.Name == groupName);
+        }
+
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientusername)
         {
            /* The code is retrieving a list of messages from the database. It uses the
            `_context.Messages` property to access the `Messages` table in the database. */
-            var messages = await _context.Messages
-                .Include(u=> u.Sender).ThenInclude(p=> p.Photos)
-                .Include(u=> u.Recipient).ThenInclude(p=> p.Photos)
+            var query = _context.Messages
                 .Where(
                     m=> m.RecipientUsername == currentUsername 
-                    && m.SenderUsername == recipientusername ||
-                    m.RecipientUsername == recipientusername &&
-                    m.SenderUsername == currentUsername
+                    && m.RecipientDeleted == false
+                    && m.SenderUsername == recipientusername 
+                    || m.RecipientUsername == recipientusername 
+                    && m.SenderDeleted == false
+                    && m.SenderUsername == currentUsername
                 )
-                .OrderByDescending(m=> m.MessageSent).ToListAsync();
+                .OrderBy(m=> m.MessageSent).AsQueryable();
 
-            var unreadMessages = messages.Where(m=> m.DateRead == null &&
+            var unreadMessages = query.Where(m=> m.DateRead == null &&
                 m.RecipientUsername == currentUsername).ToList();
 
             /* The code block is checking if there are any unread messages in the `unreadMessages`
@@ -76,18 +104,21 @@ namespace API.Data
             database using `_context.SaveChangesAsync()`. This ensures that the `DateRead` property
             is updated for all unread messages in the database. */
             if(unreadMessages.Any()){
-                foreach(var message in unreadMessages){
+                foreach(var message in unreadMessages)
+                {
                     message.DateRead = DateTime.Now;
                 }
-                await _context.SaveChangesAsync();
+                //handle with Unit of work
+                // await _context.SaveChangesAsync();
             }
 
-            return _mapper.Map<IEnumerable<MessageDto>>(messages);
+            // return _mapper.Map<IEnumerable<MessageDto>>(messages);
+            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<bool> SaveAllAsync()
+        public void RemoveConnection(Connection connection)
         {
-            return await _context.SaveChangesAsync() > 0;
+            _context.Connections.Remove(connection);
         }
     }
 }

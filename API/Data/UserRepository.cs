@@ -82,10 +82,6 @@ namespace API.Data
                 .ToListAsync();
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync()>0;
-        }
         /// <summary>
         /// Update User and modified the state
         /// </summary>

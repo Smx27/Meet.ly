@@ -2,9 +2,10 @@ name: Backend CI
 
 on:
   push:
-    branches: [ "dev" ]
+    paths:
+      - API/**
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "dev" , "Master"]
 defaults:
   run:
     working-directory: API

@@ -2,6 +2,7 @@ using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -41,16 +42,30 @@ namespace API.Extensions
             });
 
             //ADDED Cors Policy Created A New Policy NAME CORS and Call in APP context  
-            services.AddCors(o=>o.AddPolicy(name: "CORS",builder=>{
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-            }));
+            // services.AddCors(o=> o.AddPolicy(name: "CORS",builder=>{
+            //     builder.AllowAnyHeader()
+            //     .AllowAnyMethod()
+            //     .AllowCredentials()
+            //     .AllowAnyOrigin();
+            // }));
+            // services.AddCors(o=> o.AddPolicy(name: "CORS",builder=>{
+            //     builder.AllowAnyHeader()
+            //     .AllowAnyMethod()
+            //     .AllowCredentials()
+            //     .WithOrigins("https://localhost:4200");
+            // }));
+            // services.AddCors()
             
+            services.AddHttpsRedirection(options =>
+                {
+                    options.HttpsPort = 5001;
+                });
 
             //Added JWT
             services.AddScoped<ITokenService,TokenService>();
 
             //Adding User Repository
-            services.AddScoped<IUserRepository,UserRepository>();
+            // services.AddScoped<IUserRepository,UserRepository>();
 
             //adding automapper service into the application
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -58,9 +73,15 @@ namespace API.Extensions
             //Adding Photo Service
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService,PhotoService>();
-            services.AddScoped<ILikeRepository,LikesRepository>();
-            services.AddScoped<IMessageRepository,MessageRepository>();
+            // services.AddScoped<ILikeRepository,LikesRepository>();
+            // services.AddScoped<IMessageRepository,MessageRepository>();
+            //Adding Unit of work
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<LogUserActivity>();
+            //Adding SignalR
+            services.AddSignalR();
+            //Adding PresenceTracker
+            services.AddSingleton<PresenceTracker>();
             
             //Returning all the services to extend this and calling in program.cs
             return services;

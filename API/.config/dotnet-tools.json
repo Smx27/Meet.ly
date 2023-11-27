@@ -7,6 +7,12 @@
       "commands": [
         "dotnet-ef"
       ]
+    },
+    "dotnet-dev-certs": {
+      "version": "2.2.0",
+      "commands": [
+        "dotnet-dev-certs"
+      ]
     }
   }
 }

@@ -17,13 +17,13 @@ const dispatch=useDispatch()
   },[dispatch])
   return (
     <div className="my-16 md:my-48 lg:my-56">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-gray-50 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Create and account
-            </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="w-full bg-gray-50 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            Create an account
+          </h1>
+          <form className="space-y-4 md:space-y-6" action="#">
               <div>
                 <label
                   htmlFor="name"
@@ -125,8 +125,8 @@ const dispatch=useDispatch()
                   required
                 />
               </div>
-              <div className="flex justify-between items-center space-x-2">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:space-x-2">
+                <div className="flex-1">
                   <label
                     htmlFor="city"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -137,22 +137,22 @@ const dispatch=useDispatch()
                     type="name"
                     name="city"
                     className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="city"
+                    placeholder="City"
                     required
                   />
                 </div>
-                <div>
+                <div className="flex-1">
                   <label
-                    htmlFor="state"
+                    htmlFor="country"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    State
+                    Country
                   </label>
                   <input
-                    type="name"
-                    name="state"
+                    type="country"
+                    name="country"
                     className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="state"
+                    placeholder="Country"
                     required
                   />
                 </div>
@@ -190,19 +190,14 @@ const dispatch=useDispatch()
                 </label>
                 <div className="relative">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type= "password"
                     name="password"
                     id="password"
                     placeholder="••••••••"
                     className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
-                  <span
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </span>
+                 
                 </div>
               </div>
               <div className="flex items-start">
@@ -220,7 +215,7 @@ const dispatch=useDispatch()
                     htmlFor="terms"
                     className="font-light text-gray-500 dark:text-gray-300"
                   >
-                    I accept the{" "}
+                    I accept the
                     <a
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                       href="#"
@@ -237,7 +232,7 @@ const dispatch=useDispatch()
                 Create an account
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Already have an account?{" "}
+                Already have an account?
                 <a
                   href="#"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"

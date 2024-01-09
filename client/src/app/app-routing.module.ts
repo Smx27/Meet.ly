@@ -14,6 +14,7 @@ import { MemberEditDeactivateGuard } from './_guards/member-edit-deactivate.guar
 import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
+import { ChatserviceComponent } from './chatservice/chatservice.component';
 
 //Routes has to be object of routs with path for paremeters use :
 /* This code is defining the routes for an Angular application using the `Routes` interface from the
@@ -30,6 +31,7 @@ const routes: Routes = [
     {path:'member/edit',component:MemberEditComponent,canDeactivate:[MemberEditDeactivateGuard]},
     {path:'lists',component:ListsComponent},
     {path:'messages',component:MessagesComponent},
+    {path:'chat',component:ChatserviceComponent},
     {path:'admin',component:AdminPanelComponent, canActivate: [AdminGuard]}
   ]},
   {path:'not-found', component:NotFoundComponent},

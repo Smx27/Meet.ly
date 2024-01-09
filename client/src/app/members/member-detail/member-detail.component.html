@@ -1,13 +1,13 @@
 <div class="row" x-data="{ rightSide: false, leftSide: false }" >
     <div class="main custombody col-12">
-      <div class="main-container">
-        <div class="profile">
+      <div class="main-container bg-transparent ">
+        <div class="profile border-none" >
           <div class="profile-avatar">
             <img src="{{member.photoUrl || './assets/user.png'}}" alt="" class="profile-img">
             <div class="profile-name">{{member.knownAs}}</div>
           </div>
-          <img src="" alt="" class="profile-cover">
-          <div class="profile-menu">
+          <img src="" alt="" class="profile-cover border-none">
+          <div class="profile-menu bg-gray-200">
             <a class="profile-menu-link active" (click)="selectTab(0)">Timeline</a>
             <a class="profile-menu-link" (click)="selectTab(1)">About</a>
             <a class="profile-menu-link" (click)="selectTab(2)">Friends</a>
@@ -61,7 +61,7 @@
             </div>
           </div>
           <div class="timeline-right">
-           <tabset class="right-view hide-headings" #tabSet >
+           <tabset class="right-view hide-headings " #tabSet >
             <tab heading="Timeline" ngClass="{'hide-heading': true}" (selectTab)="onTabActived($event)">
               Timeline will be implimented soon
             </tab>

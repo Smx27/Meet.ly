@@ -39,7 +39,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="align-miggle">
+    <tbody class="align-miggle w-full">
         <tr [hidden]="loading" *ngFor="let message of messages"
         routerLink="{{containner === 'Outbox'
             ?'/members/' + message.recipientUsername

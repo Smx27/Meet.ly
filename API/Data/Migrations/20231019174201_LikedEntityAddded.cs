@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace API.Data.Migration
+namespace API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class LikedEntityAddded : Microsoft.EntityFrameworkCore.Migrations.Migration

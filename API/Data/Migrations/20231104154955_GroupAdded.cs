@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace API.Data.Migration
+namespace API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class GroupAdded : Microsoft.EntityFrameworkCore.Migrations.Migration

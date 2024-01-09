@@ -37,6 +37,10 @@ import { RolesModelComponent } from './models/roles-model/roles-model.component'
 import { RouteReuseStrategy } from '@angular/router';
 import { customRouteReuseStartegy } from './_services/customRouteReuse';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { ChatserviceComponent } from './chatservice/chatservice.component';
+import { UserlistComponent } from './chatservice/userlist/userlist.component';
+import { MessagethreatComponent } from './chatservice/messagethreat/messagethreat.component';
+import { ChatprofileComponent } from './chatservice/chatprofile/chatprofile.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +67,11 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     UserManagementComponent,
     PhotoManagementComponent,
     RolesModelComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UserlistComponent,
+    MessagethreatComponent,
+    ChatprofileComponent,
+    ChatserviceComponent
   ],
   imports: [
     BrowserModule,

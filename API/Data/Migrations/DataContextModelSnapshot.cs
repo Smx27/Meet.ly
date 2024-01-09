@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.Migration
+namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -169,7 +169,7 @@ namespace API.Data.Migration
 
                     b.HasIndex("GroupName");
 
-                    b.ToTable("Connections");
+                    b.ToTable("Connections", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.Group", b =>
@@ -179,7 +179,7 @@ namespace API.Data.Migration
 
                     b.HasKey("Name");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.Message", b =>
@@ -221,7 +221,7 @@ namespace API.Data.Migration
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
@@ -246,7 +246,7 @@ namespace API.Data.Migration
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.UserLike", b =>
@@ -261,7 +261,7 @@ namespace API.Data.Migration
 
                     b.HasIndex("TargetUserId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

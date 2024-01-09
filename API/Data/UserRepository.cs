@@ -1,5 +1,6 @@
 using API.Controllers.DTO;
 using API.Entities;
+using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -75,6 +76,21 @@ namespace API.Data
         public async Task<string> GetUserGender(string username)
         {
             return await _context.Users.Where(u=> u.UserName == username).Select(u=> u.Gender).FirstOrDefaultAsync();
+        }
+
+        public async Task<PagedList<MessageUserListDTO>> GetUserlist(UserParams userParams)
+        {
+            var query = _context.Users.AsQueryable();
+            query = (!string.IsNullOrEmpty(userParams.SearchChar))? query.Where(u=> u.UserName.Contains(userParams.SearchChar)): query;
+            query = query.Where(u=> u.LikedByUsers.Any(lb=> lb.SourceUser.UserName == userParams.CurrentUsername));
+
+            query = query.OrderByDescending(u=> u.LastActive);
+            
+            return await PagedList<MessageUserListDTO>.CreateAsync(
+                query.AsNoTracking()
+                .ProjectTo<MessageUserListDTO>(_mapper.ConfigurationProvider),
+                userParams.PageNumber,
+                userParams.PageSize);
         }
 
         /// <summary>

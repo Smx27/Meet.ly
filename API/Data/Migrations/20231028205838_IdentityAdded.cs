@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace API.Data.Migration
+namespace API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class IdentityAdded : Microsoft.EntityFrameworkCore.Migrations.Migration

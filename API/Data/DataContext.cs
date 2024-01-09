@@ -20,6 +20,7 @@ namespace API.Data
 
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<Timeline> Timelines { get; set; }
         /// <summary>
         /// The OnModelCreating function is used to configure the relationships and constraints between
         /// entities in the database model.
@@ -30,7 +31,7 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             modelBuilder.Entity<UserLike>()
             .HasKey(k=> new{k.SourceUserId, k.TargetUserId});
 

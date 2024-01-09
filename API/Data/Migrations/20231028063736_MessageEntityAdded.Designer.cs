@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.Migration
+namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20231028063736_MessageEntityAdded")]

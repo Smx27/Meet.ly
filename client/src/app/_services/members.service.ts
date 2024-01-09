@@ -8,6 +8,7 @@ import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { User } from '../_models/user';
 import { getPaginatedResults, getPaginationHeaders } from './paginationHelper';
+import { userList } from '../_models/userList';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,16 @@ export class MembersService {
     return getPaginatedResults<Member[]>(this.baseUrl + 'users',params, this.http).pipe(
       map(response =>{
         this.memberCache.set(key,response);
+        return response;
+      })
+    )
+  }
+  getUserlist(userParams: UserParams){
+    
+    let params = getPaginationHeaders(userParams);
+
+    return getPaginatedResults<userList[]>(this.baseUrl + 'users/userlist',params, this.http).pipe(
+      map(response =>{
         return response;
       })
     )

@@ -22,5 +22,8 @@ namespace API.Entities
         public List<Message> MessagesSent { get; set; }
         public List<Message> MessagesReceived { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
+        public List<Timeline> UserTimeline { get; set; }
+        public List<TimelineLike> LikedTimeline { get; set; }
+        public List<TimelineComment> Comments { get; set; }
     }
 }

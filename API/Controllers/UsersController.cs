@@ -58,7 +58,13 @@ namespace API.Controllers
             
             return Ok(Users);
         }
-
+        [HttpGet("userlist")]
+        public async Task<ActionResult<PagedList<MessageUserListDTO>>> GetUserList([FromQuery]UserParams userParams)
+        {
+            var userlist = await _uow.UserRepository.GetUserlist(userParams);
+            Response.AddPaginationHeader(new PaginationHeader(userlist.CurrentPage,userlist.PageSize,userlist.TotalCount,userlist.TotalPages));
+            return Ok(userlist);
+        }
         [HttpGet("id/{id}")]
         /// <summary>
         /// Api to get Specific user using id URL:api/users/5
@@ -123,7 +129,7 @@ namespace API.Controllers
            return BadRequest("Error while adding photo!");
         }
         [HttpPost("add-photo-local")]
-        public async Task<ActionResult<PhotoDTO>> AddPhotoToLocsl(IFormFile file){
+        public async Task<ActionResult<PhotoDTO>> AddPhotoToLocal(IFormFile file){
             var user = await _uow.UserRepository.GetUserByUsernameAsync(User.getUserName());
 
             if(user == null) return NotFound();

@@ -25,8 +25,11 @@ namespace API.Helpers
             CreateMap<MemberUpdateDTO, AppUser>();
 
             CreateMap<RegisterDTO, AppUser>();
-
-
+            CreateMap<AppUser, MessageUserListDTO>()
+                .ForMember(dest=> dest.Username, opt => opt.MapFrom(src => src.UserName))
+                .ForMember(dest=> dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x=> x.IsMain).Url))
+                // .ForMember(dest => dest.DateRead, opt => opt.MapFrom<LastMessageDateResolver>())
+                .ForMember(dest => dest.LastMessage, opt => opt.MapFrom<LastMessageResolver>());
             CreateMap<Message, MessageDto> ()
                 .ForMember(dest=> dest.SenderPhotoUrl, opt => opt.MapFrom(src=> src.Sender.Photos
                 .FirstOrDefault(p=> p.IsMain).Url))
@@ -37,4 +40,25 @@ namespace API.Helpers
             // CreateMap<DateTime?,DateTime?>().ConstructUsing(d=> (d.HasValue) ? DateTime.SpecifyKind(d.Value,DateTimeKind.Utc) : null);
         }
     }
+    public class LastMessageResolver : IValueResolver<AppUser, MessageUserListDTO, string>
+    {
+        public string Resolve(AppUser source, MessageUserListDTO destination, string value, ResolutionContext context)
+        {
+            string firstContent = source.MessagesSent.FirstOrDefault()?.Content;
+            string secondContent = source.MessagesReceived.FirstOrDefault()?.Content;
+            // Combine or format content as needed
+            return firstContent + " " + secondContent;
+        }
+    }
+    public class LastMessageDateResolver : IValueResolver<AppUser, MessageUserListDTO, DateTime>
+    {
+        public DateTime Resolve(AppUser source, MessageUserListDTO destination, DateTime value, ResolutionContext context)
+        {
+            DateTime firstContent = (DateTime)source.MessagesSent.FirstOrDefault().DateRead;
+            DateTime secondContent = (DateTime)source.MessagesReceived.FirstOrDefault().DateRead;
+            // Combine or format content as needed
+            return firstContent;
+        }
+    }
+
 }

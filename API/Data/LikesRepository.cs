@@ -19,7 +19,21 @@ namespace API.Data
         {
             return await _context.Likes.FindAsync(SourceUserId,TargetUserId);
         }
+        public List<int> GetLikedUsersID(int sourceUserId)
+        {
+            var users = _context.Likes.Where(l => l.SourceUserId == sourceUserId).Select(l => l.TargetUser);
+            var likedUsers = users.Select(u => new LikeDTO
+            {
+                UserName = u.UserName,
+                KnownAs = u.KnownAs,
+                Age = u.DateOfBirth.CalculateAge(),
+                City = u.City,
+                Id = u.Id,
+                PhotoUrl = u.Photos.FirstOrDefault(p => p.IsMain).Url
+            });
+            return likedUsers.Select(u => u.Id).ToList();
 
+        }
         public async Task<PagedList<LikeDTO>> GetUserLike(LikesParams likesParams)
         {
             var users = _context.Users.OrderBy(u=> u.UserName).AsQueryable();

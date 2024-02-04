@@ -1,6 +1,5 @@
 
 import Home from './Home'
-
 function App() {
 
 

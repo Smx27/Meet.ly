@@ -8,9 +8,9 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        // login: (state) => {
-        //     state.isFetching = true;
-        // },
+        login: (state) => {
+            state.isFetching = true;
+        },
         // // eslint-disable-next-line no-unused-vars
         // refreshLogin: (state,_action)=>{
         //     state.isFetching = true

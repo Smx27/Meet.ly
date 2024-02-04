@@ -32,6 +32,64 @@ Here are some additional details about the commands that are used in this script
 * The `sudo` command is used to run a command with elevated privileges. In this case, it is used to install node and angular.
 * The `npm` command is used to install Node Package Manager (npm) packages. In this case, it is used to install the angular CLI.
 
+## Docker Integration in Application Deployment
+
+We have successfully integrated Docker support into our application deployment process, streamlining the packaging and distribution of our software. Docker provides a standardized and efficient way to encapsulate our application along with its dependencies, ensuring consistency across different environments.
+
+### Building Docker Image
+
+To build a Docker image for our application, use the following command:
+
+```bash
+docker build -t username/appname .
+```
+
+This command compiles the application and its dependencies into a containerized image, tagged with "username/appname."
+
+# Deployment via Docker Hub
+
+We leverage Docker Hub for seamless deployment and image distribution. Docker Hub serves as a centralized registry for Docker images, allowing us to easily share and retrieve the latest versions of our application.
+
+To deploy the Docker image to Docker Hub, follow the appropriate steps outlined in the Docker documentation for authentication and image push. Typically, it involves the following:
+### Steps to follow
+use this steps to test or run docker image 
+1. Log in to Docker Hub:
+
+```bash
+docker login
+```
+
+2. Tag the local image with the Docker Hub repository:
+
+```bash
+docker tag username/appname username/appname:version
+```
+
+Replace "version" with the appropriate version number or tag.
+
+3. Push the image to Docker Hub:
+
+```bash
+docker push username/appname:version
+```
+4. To build image using docker
+
+```bash
+docker build -t username/appname .
+```
+5. To run this locally
+
+```bash
+docker run --rm -it -p 8080:80 yourusername/meetly
+```
+6. while test run if you get any host error use this
+
+```bash
+docker run --add-host=host.docker.internal:host-gateway --rm -it -p 8080:80 username/meetly:latest
+```
+This process ensures that our application is accessible and deployable from any environment with Docker support.
+
+By integrating Docker into our deployment workflow, we enhance portability, scalability, and consistency, ultimately contributing to a more robust and efficient deployment process.
 
 # Features:
 

@@ -12,3 +12,6 @@ sudo npm install -g @angular/cli@14
 
 to install react 18.2.0
 npm create vite@latest
+
+Docker and inside docker 
+Need postgres image 

@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
@@ -7,23 +7,26 @@ const NavBar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-//const navigate=useNavigate()
-// const handleClick=()=>{
-//   navigate("/login")
-// }
+  //const navigate=useNavigate()
+  // const handleClick=()=>{
+  //   navigate("/login")
+  // }
   return (
     <div>
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a href="#" className="flex items-center">
-            <h2 className="self-center text-2xl font-semibold whitespace-nowrap  text-black" style={{ fontFamily: "Dancing Script" }}>
-            Meet<span className='text-[#DC143C]'>.ly</span>
+            <h2
+              className="self-center text-2xl font-semibold whitespace-nowrap  text-black"
+              style={{ fontFamily: "Dancing Script" }}
+            >
+              Meet<span className="text-[#DC143C]">.ly</span>
             </h2>
           </a>
           <div className="flex md:order-2">
-            <a 
-            href="/login"
-             className="relative py-2 px-8 text-black text-base font-bold uppercase rounded-[50px] overflow-hidden bg-transparent transition-all duration-400 ease-in-out shadow-lg hover:scale-105 hover:text-white hover:border-transparent hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#C70039] before:to-[#FF0032] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-[50px] hover:before:left-0"
+            <a
+              href="/login"
+              className="relative py-2 px-8 text-black text-base font-bold uppercase rounded-[50px] overflow-hidden bg-transparent transition-all duration-400 ease-in-out shadow-lg hover:scale-105 hover:text-white hover:border-transparent hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#C70039] before:to-[#FF0032] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-[50px] hover:before:left-0"
             >
               login
             </a>
@@ -64,7 +67,7 @@ const NavBar = () => {
               <li>
                 <a
                   href="/"
-                  className="block py-2 pl-3 pr-4 text-white hover:bg-[#FF8FAB] rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                  className="block py-2 pl-3 pr-4  rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
                   aria-current="page"
                 >
                   Home

@@ -8,13 +8,13 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import moment from 'moment'
+import moment from "moment";
 const ValidationSchema = Yup.object().shape({
   userName: Yup.string().required("Your name is required"),
   knownAs: Yup.string().required("Display name is required"),
   gender: Yup.string()
-  .required("Gender is required")
-  .oneOf(["male", "female", "others"], "Invalid gender"),
+    .required("Gender is required")
+    .oneOf(["male", "female", "others"], "Invalid gender"),
   dateOfBirth: Yup.date()
     .required("Date of Birth is required")
     .typeError("Invalid date"),
@@ -46,8 +46,8 @@ const Registration = () => {
   useEffect(() => {}, [selector]);
   const onSubmit = (data) => {
     console.log(data.dateOfBirth);
-    data.dateOfBirth = moment(data.dateOfBirth).format('YYYY-MM-DD');
-    console.log(data.dateOfBirth)
+    data.dateOfBirth = moment(data.dateOfBirth).format("YYYY-MM-DD");
+    console.log(data.dateOfBirth);
     dispatch(authActions.registration(data));
   };
   return (
@@ -58,7 +58,11 @@ const Registration = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#" autoComplete="true">
+            <form
+              className="space-y-4 md:space-y-6"
+              action="#"
+              autoComplete="true"
+            >
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your name
@@ -96,63 +100,62 @@ const Registration = () => {
                 )}
               </div>
               <div>
-  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-    Gender
-  </label>
-  <div className="flex">
-    <div className="flex items-center mr-4">
-      <input
-        id="inline-radio"
-        type="radio"
-        {...register("gender", { required: true })}
-        value="male"
-        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-      />
-      <label
-        htmlFor="inline-radio"
-        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-      >
-        Male
-      </label>
-    </div>
-    <div className="flex items-center mr-4">
-      <input
-        id="inline-2-radio"
-        type="radio"
-        {...register("gender", { required: true })}
-        value="female"
-        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-      />
-      <label
-        htmlFor="inline-2-radio"
-        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-      >
-        Female
-      </label>
-    </div>
-    <div className="flex items-center mr-4">
-      <input
-        id="inline-checked-radio"
-        type="radio"
-        {...register("gender", { required: true })}
-        value="others"
-        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-      />
-      <label
-        htmlFor="inline-checked-radio"
-        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-      >
-        Others
-      </label>
-    </div>
-  </div>
-  {errors.gender && (
-    <span className="text-red-500 text-sm mt-2">
-      Gender is required
-    </span>
-  )}
-</div>
-
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Gender
+                </label>
+                <div className="flex">
+                  <div className="flex items-center mr-4">
+                    <input
+                      id="inline-radio"
+                      type="radio"
+                      {...register("gender", { required: true })}
+                      value="male"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="inline-radio"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Male
+                    </label>
+                  </div>
+                  <div className="flex items-center mr-4">
+                    <input
+                      id="inline-2-radio"
+                      type="radio"
+                      {...register("gender", { required: true })}
+                      value="female"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="inline-2-radio"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Female
+                    </label>
+                  </div>
+                  <div className="flex items-center mr-4">
+                    <input
+                      id="inline-checked-radio"
+                      type="radio"
+                      {...register("gender", { required: true })}
+                      value="others"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="inline-checked-radio"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Others
+                    </label>
+                  </div>
+                </div>
+                {errors.gender && (
+                  <span className="text-red-500 text-sm mt-2">
+                    Gender is required
+                  </span>
+                )}
+              </div>
 
               <div>
                 <label
@@ -192,11 +195,11 @@ const Registration = () => {
                     placeholder="City"
                     required
                   />
-                   {errors["city"] && (
-                  <span className="text-red-500 text-sm mt-2">
-                    {errors["city"].message}
-                  </span>
-                )}
+                  {errors["city"] && (
+                    <span className="text-red-500 text-sm mt-2">
+                      {errors["city"].message}
+                    </span>
+                  )}
                 </div>
                 <div className="flex-1">
                   <label
@@ -213,11 +216,11 @@ const Registration = () => {
                     placeholder="Country"
                     required
                   />
-                   {errors["country"] && (
-                  <span className="text-red-500 text-sm mt-2">
-                    {errors["country"].message}
-                  </span>
-                )}
+                  {errors["country"] && (
+                    <span className="text-red-500 text-sm mt-2">
+                      {errors["country"].message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
@@ -267,11 +270,11 @@ const Registration = () => {
                     className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
-                   {errors["confirmPassword"] && (
-                  <span className="text-red-500 text-sm mt-2">
-                    {errors["confirmPassword"].message}
-                  </span>
-                )}
+                  {errors["confirmPassword"] && (
+                    <span className="text-red-500 text-sm mt-2">
+                      {errors["confirmPassword"].message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="flex items-start">
@@ -309,7 +312,7 @@ const Registration = () => {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?
                 <a
-                  href="#"
+                  href="/login"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login here

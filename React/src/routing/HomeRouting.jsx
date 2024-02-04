@@ -12,7 +12,7 @@ const HomeRouting = () => {
           </div>
         </div>
       </div> */}
-      priya
+     
     </React.Fragment>
   );
 };

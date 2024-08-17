@@ -1,0 +1,124 @@
+results = 
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "",
+    "targetDisplayName": ".NET 8.0"
+  },
+  "analysisStartTime": "2024-08-17T10:33:12.4970679Z",
+  "analysisEndTime": "2024-08-17T10:33:25.9431435Z",
+  "privacyMode": "Unrestricted",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 1,
+      "issues": 1,
+      "incidents": 5,
+      "effort": 5
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 0,
+        "Optional": 0,
+        "Potential": 5,
+        "Information": 0
+      },
+      "category": {
+        "NuGet": 5
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "API\\API.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 5,
+      "ruleInstances": [
+        {
+          "incidentId": "7c7877e3-ef20-4fcd-ac66-3855b92712c6",
+          "ruleId": "NuGet.0002",
+          "projectPath": "API\\API.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "API\\API.csproj",
+            "snippet": "Microsoft.AspNetCore.Authentication.Certificate, 7.0.13\n\nRecommendation:\n\nMicrosoft.AspNetCore.Authentication.Certificate 8.0.8",
+            "protectedSnippet": "Microsoft.AspNetCore.Authentication.Certificate, 7.0.13\n\nRecommendation:\n\nMicrosoft.AspNetCore.Authentication.Certificate 8.0.8",
+            "label": "Microsoft.AspNetCore.Authentication.Certificate 7.0.13"
+          }
+        },
+        {
+          "incidentId": "92f55fd6-4ecc-4ed5-b6c1-e82a803a6531",
+          "ruleId": "NuGet.0002",
+          "projectPath": "API\\API.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "API\\API.csproj",
+            "snippet": "Microsoft.AspNetCore.Authentication.JwtBearer, 7.0.5\n\nRecommendation:\n\nMicrosoft.AspNetCore.Authentication.JwtBearer 8.0.8",
+            "protectedSnippet": "Microsoft.AspNetCore.Authentication.JwtBearer, 7.0.5\n\nRecommendation:\n\nMicrosoft.AspNetCore.Authentication.JwtBearer 8.0.8",
+            "label": "Microsoft.AspNetCore.Authentication.JwtBearer 7.0.5"
+          }
+        },
+        {
+          "incidentId": "fb09a644-2fc1-4ac3-a8bf-67659639763d",
+          "ruleId": "NuGet.0002",
+          "projectPath": "API\\API.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "API\\API.csproj",
+            "snippet": "Microsoft.AspNetCore.Identity.EntityFrameworkCore, 7.0.13\n\nRecommendation:\n\nMicrosoft.AspNetCore.Identity.EntityFrameworkCore 8.0.8",
+            "protectedSnippet": "Microsoft.AspNetCore.Identity.EntityFrameworkCore, 7.0.13\n\nRecommendation:\n\nMicrosoft.AspNetCore.Identity.EntityFrameworkCore 8.0.8",
+            "label": "Microsoft.AspNetCore.Identity.EntityFrameworkCore 7.0.13"
+          }
+        },
+        {
+          "incidentId": "6c03520a-afbf-4181-b840-789ef3499cfb",
+          "ruleId": "NuGet.0002",
+          "projectPath": "API\\API.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "API\\API.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Design, 7.0.5\n\nRecommendation:\n\nMicrosoft.EntityFrameworkCore.Design 8.0.8",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Design, 7.0.5\n\nRecommendation:\n\nMicrosoft.EntityFrameworkCore.Design 8.0.8",
+            "label": "Microsoft.EntityFrameworkCore.Design 7.0.5"
+          }
+        },
+        {
+          "incidentId": "d0ec0883-bebd-425e-82e5-38f0838fcae4",
+          "ruleId": "NuGet.0002",
+          "projectPath": "API\\API.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "API\\API.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Sqlite, 7.0.5\n\nRecommendation:\n\nMicrosoft.EntityFrameworkCore.Sqlite 8.0.8",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Sqlite, 7.0.5\n\nRecommendation:\n\nMicrosoft.EntityFrameworkCore.Sqlite 8.0.8",
+            "label": "Microsoft.EntityFrameworkCore.Sqlite 7.0.5"
+          }
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "description": "NuGet package upgrade is recommended for selected target framework.\n\nStandard .NET packages are recommended to have versions matching version of .NET that project targets.\n\nSome other packages also are known to work better for selected target frameworks.",
+      "label": "NuGet package upgrade is recommended",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}

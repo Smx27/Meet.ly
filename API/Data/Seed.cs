@@ -1,46 +1,45 @@
-using System.Text;
-using System.Security.Cryptography;
 using System.Text.Json;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Data
+namespace API.Data;
+
+public static class Seed
 {
-    public class Seed
-    {
-        public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager){
-            if(await userManager.Users.AnyAsync()) return;
+    private static readonly string[] AdminRoles = new[] {"Admin","Moderator"};
 
-            var userData = await File.ReadAllTextAsync("Data/UserDataSeed.json");
+    public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager){
+        if(await userManager.Users.AnyAsync()) return;
 
-            var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
+        var userData = await File.ReadAllTextAsync("Data/UserDataSeed.json");
 
-            var users = JsonSerializer.Deserialize<List<AppUser>>(userData,options);
+        var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
 
-            var roles = new List<AppRole>{
-                new AppRole{Name = "Member"},
-                new AppRole{Name = "Admin"},
-                new AppRole{Name = "Moderator"},
-            };
-            foreach(var role in roles)
-            {
-                await roleManager.CreateAsync(role);
-            }
+        var users = JsonSerializer.Deserialize<List<AppUser>>(userData,options);
 
-            foreach(var user in users)
-            {
-                user.UserName = user.UserName.ToLower();
-                await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user,"Member");
-            }
-
-            var admin = new AppUser{
-                UserName = "admin"
-            };
-
-            await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, new[] {"Admin","Moderator"});
+        var roles = new List<AppRole>{
+            new() { Name = "Member" },
+            new() { Name = "Admin" },
+            new() { Name = "Moderator" },
+        };
+        foreach(var role in roles)
+        {
+            await roleManager.CreateAsync(role);
         }
+
+        foreach(var user in users)
+        {
+            if (user.UserName != null) user.UserName = user.UserName.ToLower();
+            await userManager.CreateAsync(user, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(user,"Member");
+        }
+
+        var admin = new AppUser {
+            UserName = "admin"
+        };
+
+        await userManager.CreateAsync(admin, "Pa$$w0rd");
+        await userManager.AddToRolesAsync(admin, AdminRoles);
     }
 }

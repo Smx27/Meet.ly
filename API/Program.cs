@@ -19,9 +19,9 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCors();
 
 var app = builder.Build();
-app.UseCors(builder =>
+app.UseCors(corsPolicyBuilder =>
 {
-    builder.AllowAnyHeader()
+    corsPolicyBuilder.AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()
         .WithOrigins("https://localhost:4200");
@@ -30,12 +30,12 @@ app.UseCors(builder =>
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
-//app.UseCors(c=> c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+//App.UseCors(c=> c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 //app.UseCors("CORS");
 //Add Redirection from HTTP to HTTPS
 app.UseHttpsRedirection();
 
-//Jwt Authetication
+//Jwt Authentication
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -45,7 +45,7 @@ app.MapControllers();
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
 
-//This is to migrate the database and seed the data in the database. with the userDataseed json file
+//This is to migrate the database and seed the data in the database. With the userData seed json file
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try

@@ -2,37 +2,30 @@ using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
-namespace API.SignalR
+namespace API.SignalR;
+
+[Authorize]
+public class PresenceHub(PresenceTracker tracker) : Hub
 {
-    [Authorize]
-    public class PresenceHub : Hub
+    public override async Task OnConnectedAsync()
     {
-        private readonly PresenceTracker tracker;
+        var isOnline = await PresenceTracker.UserConnected(Context.User.GetUserName(), Context.ConnectionId);
 
-        public PresenceHub(PresenceTracker tracker)
-        {
-            this.tracker = tracker;
-        }
-        public override async Task OnConnectedAsync()
-        {
-            var isOnline = await tracker.UserConnected(Context.User.getUserName(), Context.ConnectionId);
-            
-            if(isOnline)
-                await Clients.Others.SendAsync("UserIsOnline", Context.User.getUserName());
+        if (isOnline)
+            await Clients.Others.SendAsync("UserIsOnline", Context.User.GetUserName());
 
-            var currentUsers = await tracker.GetOnlineUsers();
+        var currentUsers = await tracker.GetOnlineUsers();
 
-            await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
-        }
+        await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
+    }
 
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            var isOffline = await tracker.UserDisconnected(Context.User.getUserName(), Context.ConnectionId);
-            
-            if(isOffline)
-                await Clients.Others.SendAsync("UserIsOffline", Context.User.getUserName());
+    public override async Task OnDisconnectedAsync(Exception exception)
+    {
+        var isOffline = await PresenceTracker.UserDisconnected(Context.User.GetUserName(), Context.ConnectionId);
 
-            await base.OnDisconnectedAsync(exception);
-        }
+        if (isOffline)
+            await Clients.Others.SendAsync("UserIsOffline", Context.User.GetUserName());
+
+        await base.OnDisconnectedAsync(exception);
     }
 }

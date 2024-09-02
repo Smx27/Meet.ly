@@ -4,61 +4,60 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+public class AdminController : BaseApiController
 {
-    public class AdminController : BaseApiController
+    private readonly UserManager<AppUser> _userManager;
+    public AdminController(UserManager<AppUser> userManager)
     {
-        private readonly UserManager<AppUser> userManager;
-        public AdminController(UserManager<AppUser> userManager)
-        {
-            this.userManager = userManager;
-        }
+        this._userManager = userManager;
+    }
 
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("users-with-roles")]
-        public async Task<ActionResult> GetUsersWithRoles()
-        {
-            var users = await userManager.Users
-                .OrderBy(u=> u.UserName)
-                .Select(u=> new {
-                    u.Id,
-                    Username = u.UserName,
-                    Roles = u.UserRoles.Select(r=> r.Role.Name).ToList()
-                }).ToListAsync();
+    [Authorize(Policy = "RequireAdminRole")]
+    [HttpGet("users-with-roles")]
+    public async Task<ActionResult> GetUsersWithRoles()
+    {
+        var users = await _userManager.Users
+            .OrderBy(u=> u.UserName)
+            .Select(u=> new {
+                u.Id,
+                Username = u.UserName,
+                Roles = u.UserRoles.Select(r=> r.Role.Name).ToList()
+            }).ToListAsync();
 
-            return Ok(users);
-        }
+        return Ok(users);
+    }
 
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost("edit-roles/{username}")]
-        public async Task<ActionResult> EditRoles(string username, [FromQuery]string roles){
+    [Authorize(Policy = "RequireAdminRole")]
+    [HttpPost("edit-roles/{username}")]
+    public async Task<ActionResult> EditRoles(string username, [FromQuery]string roles){
             
-            if(string.IsNullOrEmpty(roles)) return BadRequest("You must select atleas one role");
+        if(string.IsNullOrEmpty(roles)) return BadRequest("You must select at least one role");
 
-            var selectedRoles = roles.Split(',');
+        var selectedRoles = roles.Split(',');
 
-            var user = await userManager.FindByNameAsync(username);
+        var user = await _userManager.FindByNameAsync(username);
 
-            if(user == null) return NotFound();
+        if(user == null) return NotFound();
 
-            var userRoles = await userManager.GetRolesAsync(user);
+        var userRoles = await _userManager.GetRolesAsync(user);
 
-            var results = await userManager.AddToRolesAsync(user,selectedRoles.Except(userRoles));
+        var results = await _userManager.AddToRolesAsync(user,selectedRoles.Except(userRoles));
 
-            if(!results.Succeeded) return BadRequest("Failed to assign role");
+        if(!results.Succeeded) return BadRequest("Failed to assign role");
 
-            results = await userManager.RemoveFromRolesAsync(user,userRoles.Except(selectedRoles));
+        results = await _userManager.RemoveFromRolesAsync(user,userRoles.Except(selectedRoles));
 
-            if(!results.Succeeded) return BadRequest("Failed to remove from roles");
+        if(!results.Succeeded) return BadRequest("Failed to remove from roles");
 
-            return Ok(await userManager.GetRolesAsync(user));
-        }
+        return Ok(await _userManager.GetRolesAsync(user));
+    }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpGet("photos-to-moderate")]
-        public ActionResult GetPhotosForModerators()
-        {
-            return Ok("Only admins and Modaretors can see this");
-        }
+    [Authorize(Policy = "ModeratePhotoRole")]
+    [HttpGet("photos-to-moderate")]
+    public ActionResult GetPhotosForModerators()
+    {
+        return Ok("Only admins and Moderators can see this");
     }
 }

@@ -1,12 +1,11 @@
-namespace API.Interfaces
-{
-    public interface IUnitOfWork
-    {
-        public IUserRepository UserRepository { get; }
-        public IMessageRepository MessageRepository { get; }
-        public ILikeRepository LikesRepository { get; }
+namespace API.Interfaces;
 
-        Task<bool> Complete();
-        bool HasChanges();
-    }
+public interface IUnitOfWork
+{
+    public IUserRepository UserRepository { get; }
+    public IMessageRepository MessageRepository { get; }
+    public ILikeRepository LikesRepository { get; }
+
+    Task<bool> Complete();
+    bool HasChanges();
 }
